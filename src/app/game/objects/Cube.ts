@@ -1,10 +1,15 @@
 
 import * as THREE from 'three';
+import {RoundedBoxGeometry} from './RoundedBoxGeometry';
+import {RoundedPlaneGeometry} from './Functions';
+type SizeRange = 2|3|4|5;
 
 export class Cube {
 
   private game: any;
-  private size = 3;
+  //private size:number = 3;
+  // private size:2|3|4|5 = 3
+  private size:SizeRange = 3
   private scale!: number;
   private pieces: any[] = [];
   private edges: any;
@@ -18,7 +23,7 @@ export class Cube {
   private animator:THREE.Object3D;
 
   
-  private cubes = [];
+  private cubes:any[] = [];
   
   constructor( game: any ) {
 
@@ -99,7 +104,7 @@ export class Cube {
 
   }
 
-  private reset() {
+  public reset() {
 
     this.game.controls.edges.rotation.set( 0, 0, 0 );
 
@@ -153,7 +158,8 @@ export class Cube {
     const mainMaterial = new THREE.MeshLambertMaterial();
 
     const pieceMesh = new THREE.Mesh(
-      this.RoundedBoxGeometry( pieceSize, this.geometry.pieceCornerRadius, 3 ),
+      new THREE.BoxGeometry( pieceSize, pieceSize, pieceSize),
+      // new RoundedBoxGeometry( pieceSize, this.geometry.pieceCornerRadius, 3 ),
       mainMaterial.clone()
     );
 
@@ -250,33 +256,6 @@ export class Cube {
 
   }
 
-  private RoundedPlaneGeometry( size: number, radius: number, depth: number ) {
 
-    var x, y, width, height;
-  
-    x = y = - size / 2;
-    width = height = size;
-    radius = size * radius;
-  
-    const shape = new THREE.Shape();
-  
-    shape.moveTo( x, y + radius );
-    shape.lineTo( x, y + height - radius );
-    shape.quadraticCurveTo( x, y + height, x + radius, y + height );
-    shape.lineTo( x + width - radius, y + height );
-    shape.quadraticCurveTo( x + width, y + height, x + width, y + height - radius );
-    shape.lineTo( x + width, y + radius );
-    shape.quadraticCurveTo( x + width, y, x + width - radius, y );
-    shape.lineTo( x + radius, y );
-    shape.quadraticCurveTo( x, y, x, y + radius );
-  
-    const geometry = new THREE.ExtrudeBufferGeometry(
-      shape,
-      { depth: depth, bevelEnabled: false, curveSegments: 3 }
-    );
-  
-    return geometry;
-  
-  }
 
 }

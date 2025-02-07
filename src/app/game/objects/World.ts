@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import {Animation} from './Animation';
+
 export class World extends Animation {
 
   private game: any;
@@ -49,7 +51,7 @@ export class World extends Animation {
 
   }
 
-  private update() {
+  override update() {
 
     this.renderer.render( this.scene, this.camera );
 
@@ -66,7 +68,7 @@ export class World extends Animation {
     this.camera.aspect = this.width / this.height;
 
     const aspect = this.stage.width / this.stage.height;
-    const fovRad = this.fov * THREE.Math.DEG2RAD;
+    const fovRad = this.fov * THREE.MathUtils.DEG2RAD;
 
     let distance = ( aspect < this.camera.aspect )
       ? ( this.stage.height / 2 ) / Math.tan( fovRad / 2 )
@@ -84,7 +86,7 @@ export class World extends Animation {
 
     document.documentElement.style.fontSize = docFontSize + 'px';
 
-    if ( this.onResize ) this.onResize.forEach( cb => cb() );
+    // if ( this.onResize ) this.onResize.forEach( (cb) => cb() );
 
   }
 

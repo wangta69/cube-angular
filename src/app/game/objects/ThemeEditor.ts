@@ -1,6 +1,13 @@
+import * as THREE from 'three';
+import { Tween } from './Tween';
+import {Easing} from './Constants';
+
 export class ThemeEditor {
   private game;
-  constructor( game ) {
+  private editColor: string;
+  private tweenHSL!: Tween;
+
+  constructor( game: any ) {
 
     this.game = game;
 
@@ -10,7 +17,7 @@ export class ThemeEditor {
 
   }
 
-  colorFromHSL( h, s, l ) {
+  private colorFromHSL( h:number, s:number, l:number ) {
 
     h = Math.round( h );
     s = Math.round( s );
@@ -20,13 +27,18 @@ export class ThemeEditor {
 
   }
 
-  setHSL( color = null, animate = false ) {
+  public setHSL( color:string|null = null, animate = false ) {
 
     this.editColor = ( color === null) ? 'R' : color;
 
     const hsl = new THREE.Color( this.game.themes.getColors()[ this.editColor ] );
 
-    const { h, s, l } = hsl.getHSL( hsl );
+    // ? const { h, s, l } = hsl.getHSL( hsl );
+    console.log('setHSL ---------------- 다시 보기');
+    const h = 0;
+    const s = 0;
+    const l = 0;
+
     const { hue, saturation, lightness } = this.game.preferences.ranges;
 
     if ( animate ) {
@@ -42,7 +54,7 @@ export class ThemeEditor {
       this.tweenHSL = new Tween( {
         duration: 200,
         easing: Easing.Sine.Out(),
-        onUpdate: tween => {
+        onUpdate: (tween: any) => {
 
           hue.setValue( ( ho + ( h - ho ) * tween.value ) * 360 );
           saturation.setValue( ( so + ( s - so ) * tween.value ) * 100 );
@@ -51,8 +63,9 @@ export class ThemeEditor {
           const colorTween = colorOld.clone().lerp( hsl, tween.value );
 
           const colorTweenStyle = colorTween.getStyle();
-          const colorTweenHex = colorTween.getHSL( colorTween );
-
+          // const colorTweenHex = colorTween.getHSL( colorTween );
+          console.log('getHSL 다식 보기');
+          const colorTweenHex = colorTween.getHSL( tween.value );
           hue.handle.style.color = colorTweenStyle;
           saturation.handle.style.color = colorTweenStyle;
           lightness.handle.style.color = colorTweenStyle;
@@ -88,7 +101,7 @@ export class ThemeEditor {
 
   }
 
-  updateHSL() {
+  private updateHSL() {
 
     const { hue, saturation, lightness } = this.game.preferences.ranges;
 
@@ -116,21 +129,21 @@ export class ThemeEditor {
 
   }
 
-  colorPicker( enable ) {
+  public colorPicker( enable: boolean ) {
 
     if ( enable ) {
 
-      this.game.dom.game.addEventListener( 'click', this.getPieceColor, false );
+      this.game.dom.game.addEventListener( 'click', this.getPieceColor.bind(this), false );
 
     } else {
 
-      this.game.dom.game.removeEventListener( 'click', this.getPieceColor, false );
+      this.game.dom.game.removeEventListener( 'click', this.getPieceColor.bind(this), false );
 
     }
 
   }
 
-  getPieceColor( event ) {
+  private getPieceColor( event:any ) {
 
     const clickEvent = event.touches
       ? ( event.touches[ 0 ] || event.changedTouches[ 0 ] )
@@ -161,7 +174,7 @@ export class ThemeEditor {
 
   }
 
-  resetTheme() {
+  public resetTheme() {
 
     this.game.themes.colors[ this.game.themes.theme ] =
       JSON.parse( JSON.stringify( this.game.themes.defaults[ this.game.themes.theme ] ) );

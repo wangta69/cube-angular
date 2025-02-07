@@ -1,6 +1,13 @@
 export class IconsConverter {
 
-  constructor( options ) {
+  private tagName:string;
+  private className:string;
+  private icons:any[];
+
+  private svgTag: any;
+  private observer: any;
+
+  constructor( options:any ) {
 
     options = Object.assign( {
       tagName: 'icon',
@@ -23,23 +30,23 @@ export class IconsConverter {
 
     if ( options.observe ) {
 
-      const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+      const MutationObserver = window.MutationObserver || (window as any).WebKitMutationObserver;
       this.observer = new MutationObserver( mutations => { this.convertAllIcons(); } );
       this.observer.observe( document.documentElement, { childList: true, subtree: true } );
 
     }
 
-    return this;
+    // return this;
 
   }
 
-  convertAllIcons() {
+  private convertAllIcons() {
 
     document.querySelectorAll( this.tagName ).forEach( icon => { this.convertIcon( icon ); } );
 
   }
 
-  convertIcon( icon ) {
+  private convertIcon( icon:any ) {
 
     const svgData = this.icons[ icon.attributes[0].localName ];
 
@@ -57,7 +64,7 @@ export class IconsConverter {
 
   }
 
-  addStyles() {
+  private addStyles() {
 
     const style = document.createElement( 'style' );
     style.innerHTML = `.${this.className} { display: inline-block; font-size: inherit; overflow: visible; vertical-align: -0.125em; preserveAspectRatio: none; }`;

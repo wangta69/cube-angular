@@ -4,16 +4,34 @@ import {Animation} from './Animation';
 
 export class Tween extends Animation {
 
+  private duration:number;
+  private easing:any;
+  private onUpdate:any;
+  private onComplete:any;
+
+  private delay:number
+  private yoyo:boolean|null
+
+  private progress = 0;
+  private value = 0;
+  private values:any;
+  private delta = 0;
+
+  private target: any;
+  private from: any;
+  private to: any; 
+
+
   constructor( options: any ) {
 
     super( false );
 
     this.duration = options.duration || 500;
-    this.easing = options.easing || ( t => t );
+    this.easing = options.easing || ( (t:number) => t );
     this.onUpdate = options.onUpdate || ( () => {} );
     this.onComplete = options.onComplete || ( () => {} );
 
-    this.delay = options.delay || false;
+    this.delay = options.delay || 0;
     this.yoyo = options.yoyo ? false : null;
 
     this.progress = 0;
@@ -29,7 +47,7 @@ export class Tween extends Animation {
 
   }
 
-  override update( delta ) {
+  override update( delta:number ) {
 
     const old = this.value * 1;
     const direction = ( this.yoyo === true ) ? - 1 : 1;
@@ -70,7 +88,7 @@ export class Tween extends Animation {
 
   private updateFromTo() {
 
-    this.values.forEach( key => {
+    this.values.forEach( (key:number) => {
 
       this.target[ key ] = this.from[ key ] + ( this.to[ key ] - this.from[ key ] ) * this.value;
 
@@ -78,7 +96,7 @@ export class Tween extends Animation {
 
   }
 
-  private getFromTo( options ) {
+  private getFromTo( options:any ) {
 
     if ( ! options.target || ! options.to ) {
 

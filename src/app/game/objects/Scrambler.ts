@@ -32,10 +32,8 @@ export class Scrambler {
   }
 
   public scramble( scramble?:string ) {
-
     let count = 0;
     this.moves = ( typeof scramble !== 'undefined' ) ? scramble.split( ' ' ) : [];
-
     if ( this.moves.length < 1 ) {
 
       const scrambleLength = this.scrambleLength[ this.game.cube.size ][ this.dificulty ];
@@ -45,26 +43,24 @@ export class Scrambler {
       const total = ( typeof scramble === 'undefined' ) ? scrambleLength : scramble;
 
       while ( count < total ) {
-
+        
         const move =
           faces[ Math.floor( Math.random() * faces.length ) ] +
           modifiers[ Math.floor( Math.random() * 3 ) ];
 
         if ( count > 0 && move.charAt( 0 ) == this.moves[ count - 1 ].charAt( 0 ) ) continue;
         if ( count > 1 && move.charAt( 0 ) == this.moves[ count - 2 ].charAt( 0 ) ) continue;
-
+        
         this.moves.push( move );
         count ++;
-
       }
-
     }
 
     
     this.convert();
     this.print = this.moves.join( ' ' );
 
-    return this;
+    // return this;
 
   }
 
@@ -90,12 +86,16 @@ export class Scrambler {
     const modifier = move.charAt( 1 );
 
     const axis = { D: 'y', U: 'y', L: 'x', R: 'x', F: 'z', B: 'z' }[ face.toUpperCase() ];
-    let row = { D: -1, U: 1, L: -1, R: 1, F: 1, B: -1 }[ face.toUpperCase() ];
+    let row= { D: -1, U: 1, L: -1, R: 1, F: 1, B: -1 }[ face.toUpperCase() ];
 
+    if(row !== -1 && row !== 1) {
+      console.error('convertMove Error');
+      return;
+    }
     if ( this.game.cube.size > 3 && face !== face.toLowerCase() ) row = row * 2;
 
     const position:any = new THREE.Vector3();
-    position[ { D: 'y', U: 'y', L: 'x', R: 'x', F: 'z', B: 'z' }[ face.toUpperCase() ] ] = row;
+    position[ ({ D: 'y', U: 'y', L: 'x', R: 'x', F: 'z', B: 'z' } as any)[ face.toUpperCase() ] ] = row;
 
     const angle = ( Math.PI / 2 ) * - row * ( ( modifier == "'" ) ? - 1 : 1 );
 

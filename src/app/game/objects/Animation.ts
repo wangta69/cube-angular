@@ -11,18 +11,18 @@ export class Animation {
 
   }
 
-  protected start() {
+  public start() {
 
     this.animationEngine.add( this );
 
   }
 
-  protected stop() {
+  public stop() {
 
     this.animationEngine.remove( this );
 
   }
 
-  protected update( delta: number ) {}
+  public update( delta: number ) {}
 
 }

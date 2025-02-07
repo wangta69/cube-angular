@@ -1,6 +1,17 @@
+import * as THREE from 'three';
+import {ConfettiStage} from './ConfettiStage';
 export class Confetti {
   private game;
-  constructor( game ) {
+
+  private started = 0;
+  private options: any = {};
+  private geometry: THREE.PlaneGeometry;
+  private material: THREE.MeshLambertMaterial;
+
+  private holders: any[] = [];
+
+
+  constructor( game: any ) {
 
     this.game = game;
     this.started = 0;
@@ -22,7 +33,7 @@ export class Confetti {
 
   }
 
-  start() {
+  public start() {
 
     if ( this.started > 0 ) return;
 
@@ -36,7 +47,7 @@ export class Confetti {
 
   }
 
-  stop() {
+  public stop() {
 
     if ( this.started == 0 ) return;
 
@@ -53,11 +64,11 @@ export class Confetti {
 
   }
 
-  updateColors( colors ) {
+  private updateColors( colors: any ) {
 
     this.holders.forEach( holder => {
 
-      holder.options.colors.forEach( ( color, index ) => {
+      holder.options.colors.forEach( ( color: any, index:number ) => {
 
         holder.options.colors[ index ] = colors[ [ 'D', 'F', 'R', 'B', 'L' ][ index ] ];
 

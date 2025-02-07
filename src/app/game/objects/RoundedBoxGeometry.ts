@@ -23,13 +23,13 @@ export class RoundedBoxGeometry extends THREE.BufferGeometry {
   private positions:THREE.BufferAttribute;
   private normals:THREE.BufferAttribute;
     
-  private  cornerVerts:any[][] = [];
-  private cornerNormals = [];
+  private cornerVerts:any[][] = [];
+  private cornerNormals:any[] = [];
   private normal = new THREE.Vector3();
   private vertex = new THREE.Vector3();
-  private vertexPool = [];
-  private normalPool = [];
-  private indices = [];
+  private vertexPool:any[] = [];
+  private normalPool:any[] = [];
+  private indices:any[] = [];
 
     
   private lastVertex: number;
@@ -139,7 +139,7 @@ export class RoundedBoxGeometry extends THREE.BufferGeometry {
         this.cornerVerts[ 0 ].push( vert );
         this.vertexPool.push( vert );
 
-        const norm = vertex.clone().normalize();
+        const norm = this.vertex.clone().normalize();
         this.cornerNormals[ 0 ].push( norm );
         this.normalPool.push( norm );
 
@@ -151,7 +151,7 @@ export class RoundedBoxGeometry extends THREE.BufferGeometry {
 
       for ( let j = 0; j < this.cornerVerts[ 0 ].length; j ++ ) {
 
-        const vert = cornerVerts[ 0 ][ j ].clone().multiply( cornerLayout[ i ] );
+        const vert = this.cornerVerts[ 0 ][ j ].clone().multiply( cornerLayout[ i ] );
         this.cornerVerts[ i ].push( vert );
         this.vertexPool.push( vert );
 
@@ -331,8 +331,8 @@ export class RoundedBoxGeometry extends THREE.BufferGeometry {
 
       const cOffset = i * this.cornerVertNumber;
       const cRowOffset = 4 * this.cornerVertNumber + cOffset;
-      const needsFlip = i & 1 === 1;
-
+      const needsFlip = i & 1;
+      // ? const needsFlip = i & 1 === 1;
       for ( let u = 0; u < this.radiusSegments; u ++ ) {
 
         const u1 = u + 1;

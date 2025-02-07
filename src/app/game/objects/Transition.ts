@@ -1,5 +1,5 @@
 import {Tween} from './Tween';
-
+import {Easing} from './Constants';
 
 export class Transition {
   private game;
@@ -137,7 +137,7 @@ export class Transition {
       duration: 1500,
       easing: Easing.Sine.InOut(),
       yoyo: true,
-      onUpdate: tween => {
+      onUpdate: (tween: any) => {
 
         this.game.cube.holder.position.y = (- 0.02 + tween.value * 0.04); 
         this.game.cube.holder.rotation.x = 0.005 - tween.value * 0.01;
@@ -183,7 +183,7 @@ export class Transition {
 
   }
 
-  private elevate( complete: boolean ) {
+  public elevate( complete: boolean ) {
 
     this.activeTransitions++;
 
@@ -202,7 +202,7 @@ export class Transition {
 
   }
 
-  private complete( show:boolean, best:boolean ) {
+  public complete( show:boolean, best:boolean ) {
 
     this.activeTransitions++;
 

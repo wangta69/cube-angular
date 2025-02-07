@@ -27,7 +27,7 @@ export class Timer extends Animation {
 
   }
 
-  private reset() {
+  public reset() {
 
     this.startTime = 0;
     this.currentTime = 0;
@@ -48,7 +48,7 @@ export class Timer extends Animation {
 
   }
 
-  private update() {
+  override update() {
 
     const old = this.converted;
 
@@ -67,8 +67,8 @@ export class Timer extends Animation {
 
   private convert() {
 
-    const seconds = parseInt( ( this.deltaTime / 1000 ) % 60 );
-    const minutes = parseInt( ( this.deltaTime / ( 1000 * 60 ) ) );
+    const seconds =( this.deltaTime / 1000 ) % 60 ;
+    const minutes = ( this.deltaTime / ( 1000 * 60 ) ) ;
 
     return minutes + ':' + ( seconds < 10 ? '0' : '' ) + seconds;
 

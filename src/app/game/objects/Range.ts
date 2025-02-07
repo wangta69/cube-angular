@@ -1,6 +1,22 @@
+import {Draggable} from './Draggable';
 export class Range {
 
-  constructor( name, options ) {
+  private element:any;
+  private track:any;
+  private handle:any;
+  private list:any;
+
+  private value:any;
+  private min:number
+  private max:number
+  private step:number
+
+  private onUpdate:any;
+  private onComplete:any;
+
+  private draggable: any;
+
+  constructor( name:string, options:any ) {
 
     options = Object.assign( {
       range: [ 0, 1 ],
@@ -29,27 +45,27 @@ export class Range {
 
   }
 
-  setValue( value ) {
+  private setValue( value:number ) {
 
     this.value = this.round( this.limitValue( value ) );
     this.setHandlePosition();
 
   }
 
-  initDraggable() {
+  private initDraggable() {
 
-    let current;
+    let current:number;
 
     this.draggable = new Draggable( this.handle, { calcDelta: true } );
 
-    this.draggable.onDragStart = position => {
+    this.draggable.onDragStart = (position: any) => {
 
       current = this.positionFromValue( this.value );
       this.handle.style.left = current + 'px';
 
     };
 
-    this.draggable.onDragMove = position => {
+    this.draggable.onDragMove = (position: any) => {
 
       current = this.limitPosition( current + position.delta.x );
       this.value = this.round( this.valueFromPosition( current ) );
@@ -59,7 +75,7 @@ export class Range {
 
     };
 
-    this.draggable.onDragEnd = position => {
+    this.draggable.onDragEnd = (position: any) => {
 
       this.onComplete( this.value );
 
@@ -67,7 +83,7 @@ export class Range {
 
   }
 
-  round( value ) {
+  private round( value:number ) {
 
     if ( this.step < 1 ) return value;
 
@@ -75,7 +91,7 @@ export class Range {
 
   }
 
-  limitValue( value ) {
+  private limitValue( value:number ) {
 
     const max = Math.max( this.max, this.min );
     const min = Math.min( this.max, this.min );
@@ -84,31 +100,31 @@ export class Range {
 
   }
 
-  limitPosition( position ) {
+  private limitPosition( position:number ) {
 
     return Math.min( Math.max( position, 0 ), this.track.offsetWidth );
 
   }
 
-  percentsFromValue( value ) {
+  private  percentsFromValue( value:number ) {
 
     return ( value - this.min ) / ( this.max - this.min );
 
   }
 
-  valueFromPosition( position ) {
+  private valueFromPosition( position:number ) {
 
     return this.min + ( this.max - this.min ) * ( position / this.track.offsetWidth );
 
   }
 
-  positionFromValue( value ) {
+  private positionFromValue( value:number ) {
 
     return this.percentsFromValue( value ) * this.track.offsetWidth;
 
   }
 
-  setHandlePosition() {
+  private setHandlePosition() {
 
     this.handle.style.left = this.percentsFromValue( this.value ) * 100 + '%';
 

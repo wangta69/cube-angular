@@ -1,30 +1,31 @@
+import * as THREE from 'three';
 export class Storage {
   private game;
-  constructor( game ) {
+  constructor( game:any ) {
 
     this.game = game;
 
     const userVersion = localStorage.getItem( 'theCube_version' );
 
-    if ( ! userVersion || userVersion !== window.gameVersion ) {
+    if ( ! userVersion || userVersion !== (window as any).gameVersion ) {
 
       this.clearGame();
       this.clearPreferences();
       this.migrateScores();
-      localStorage.setItem( 'theCube_version', window.gameVersion );
+      localStorage.setItem( 'theCube_version', (window as any).gameVersion );
 
     }
 
   }
 
-  init() {
+  public init() {
 
     this.loadPreferences();
     this.loadScores();
 
   }
 
-  loadGame() {
+  public loadGame() {
 
     try {
 
@@ -32,8 +33,11 @@ export class Storage {
 
       if ( ! gameInProgress ) throw new Error();
 
-      const gameCubeData = JSON.parse( localStorage.getItem( 'theCube_savedState' ) );
-      const gameTime = parseInt( localStorage.getItem( 'theCube_time' ) );
+      const theCube_savedState = localStorage.getItem( 'theCube_savedState' );
+      const gameCubeData = theCube_savedState ? JSON.parse( theCube_savedState ) : null;
+      
+      const theCube_time = localStorage.getItem( 'theCube_time' );
+      const gameTime = theCube_time ? parseInt( theCube_time ) : null;
 
       if ( ! gameCubeData || gameTime === null ) throw new Error();
       if ( gameCubeData.size !== this.game.cube.sizeGenerated ) throw new Error();
@@ -52,19 +56,21 @@ export class Storage {
 
   }
 
-  saveGame() {
+  private saveGame() {
 
-    const gameInProgress = true;
-    const gameCubeData = { names: [], positions: [], rotations: [] };
+    const gameInProgress = 'true';
+    const gameCubeData: any= { names: [], positions: [], rotations: [] };
     const gameTime = this.game.timer.deltaTime;
 
     gameCubeData.size = this.game.cube.sizeGenerated;
 
-    this.game.cube.pieces.forEach( piece => {
+    this.game.cube.pieces.forEach( (piece: any) => {
 
       gameCubeData.names.push( piece.name );
       gameCubeData.positions.push( piece.position );
-      gameCubeData.rotations.push( piece.rotation.toVector3() );
+      // gameCubeData.rotations.push( piece.rotation.toVector3() );
+      gameCubeData.rotations.push( new THREE.Vector3().setFromEuler(piece.rotation));
+
 
     } );
 
@@ -74,7 +80,7 @@ export class Storage {
 
   }
 
-  clearGame() {
+  public clearGame() {
 
     localStorage.removeItem( 'theCube_playing' );
     localStorage.removeItem( 'theCube_savedState' );
@@ -82,11 +88,11 @@ export class Storage {
 
   }
 
-  loadScores() {
+  private loadScores() {
 
     try {
-
-      const scoresData = JSON.parse( localStorage.getItem( 'theCube_scores' ) );
+      const theCube_scores = localStorage.getItem( 'theCube_scores' );
+      const scoresData = theCube_scores ? JSON.parse(theCube_scores):null;
 
       if ( ! scoresData ) throw new Error();
 
@@ -96,7 +102,7 @@ export class Storage {
 
   }
 
-  saveScores() {
+  private saveScores() {
 
     const scoresData = this.game.scores.data;
 
@@ -110,14 +116,20 @@ export class Storage {
 
   }
 
-  migrateScores() {
+  private migrateScores() {
 
     try {
 
-      const scoresData = JSON.parse( localStorage.getItem( 'theCube_scoresData' ) );
-      const scoresBest = parseInt( localStorage.getItem( 'theCube_scoresBest' ) );
-      const scoresWorst = parseInt( localStorage.getItem( 'theCube_scoresWorst' ) );
-      const scoresSolves = parseInt( localStorage.getItem( 'theCube_scoresSolves' ) );
+      const theCube_scoresData = localStorage.getItem( 'theCube_scoresData' );
+      const theCube_scoresBest = localStorage.getItem( 'theCube_scoresBest' );
+      const theCube_scoresWorst = localStorage.getItem( 'theCube_scoresWorst' );
+      const theCube_scoresSolves =localStorage.getItem( 'theCube_scoresSolves' );
+
+
+      const scoresData = theCube_scoresData ? JSON.parse( theCube_scoresData ) : null;
+      const scoresBest = theCube_scoresBest ? parseInt( theCube_scoresBest ) : null;
+      const scoresWorst = theCube_scoresWorst ? parseInt( theCube_scoresWorst ) : null;
+      const scoresSolves = theCube_scoresSolves ? parseInt( theCube_scoresSolves ) : null;
 
       if ( ! scoresData || ! scoresBest || ! scoresSolves || ! scoresWorst ) return false;
 
@@ -133,13 +145,14 @@ export class Storage {
 
     } catch( e ) {}
 
+    return true;
   }
 
-  loadPreferences() {
+  private loadPreferences() {
 
     try {
-
-      const preferences = JSON.parse( localStorage.getItem( 'theCube_preferences' ) );
+      const theCube_preferences = localStorage.getItem( 'theCube_preferences' );
+      const preferences = theCube_preferences ? JSON.parse( theCube_preferences) : null;
 
       if ( ! preferences ) throw new Error();
 
@@ -174,7 +187,7 @@ export class Storage {
 
   }
 
-  savePreferences() {
+  private savePreferences() {
 
     const preferences = {
       cubeSize: this.game.cube.size,
@@ -189,7 +202,7 @@ export class Storage {
 
   }
 
-  clearPreferences() {
+  private clearPreferences() {
 
     localStorage.removeItem( 'theCube_preferences' );
 

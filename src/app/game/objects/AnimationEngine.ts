@@ -16,14 +16,14 @@ export class AnimationEngine {
 
   }
 
-  private update() {
+  private update = () => {
 
     const now = performance.now();
     const delta = now - this.time;
+    
     this.time = now;
 
     let i = this.ids.length;
-
     this.raf = i ? requestAnimationFrame( this.update ) : 0;
 
     while ( i-- )

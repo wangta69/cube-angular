@@ -1,9 +1,15 @@
 export class Themes {
   private game;
-  constructor( game ) {
+  
+  private theme:string;
+
+  private defaults = {cube:{}, erno:{}, dust:{}, camo:{}, rain:{}}
+  private colors:string;
+
+  constructor( game: any ) {
 
     this.game = game;
-    this.theme = null;
+    this.theme = 'cube';
 
     this.defaults = {
       cube: {
@@ -62,20 +68,20 @@ export class Themes {
 
   }
 
-  getColors() {
+  private getColors() {
 
-    return this.colors[ this.theme ];
+    return (this.colors as any)[ this.theme ];
 
   }
 
-  setTheme( theme = false, force = false ) {
+  private setTheme( theme:string, force = false ) {
 
     if ( theme === this.theme && force === false ) return;
-    if ( theme !== false ) this.theme = theme;
+    if ( theme) this.theme = theme;
 
     const colors = this.getColors();
 
-    this.game.dom.prefs.querySelectorAll( '.range__handle div' ).forEach( range => {
+    this.game.dom.prefs.querySelectorAll( '.range__handle div' ).forEach( (range: any) => {
 
       range.style.background = '#' + colors.R.toString(16).padStart(6, '0');
 

@@ -1,6 +1,6 @@
 import { Component,OnInit,AfterViewInit,ViewChild,ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import * as THREE from 'three';
-import {SHOW, HIDE, STATE, BUTTONS} from './objects/Constants';
+import {SHOW, HIDE, STATE, BUTTONS, States} from './objects/Constants';
 import {World} from './objects/World';
 import {Cube} from './objects/Cube';
 import {Controls} from './objects/Controls';
@@ -22,11 +22,7 @@ import {ThemeEditor} from './objects/ThemeEditor';
 })
 export class GameComponent implements OnInit, AfterViewInit{
 
- 
-
-
-
-    //THREEJS RELATED VARIABLES
+  //THREEJS RELATED VARIABLES
 
   private scene: any;
   private camera: any;
@@ -34,18 +30,18 @@ export class GameComponent implements OnInit, AfterViewInit{
   private dom: any;
 
 
-  private world:World;
-  private cube:Cube;
-  private controls:Controls;
-  private scrambler:Scrambler;
-  private transition:Transition;
-  private timer:Timer;
-  private preferences:Preferences;
-  private scores:Scores;
-  private storage:Storage;
-  private confetti:Confetti;
-  private themes:Themes;
-  private themeEditor:ThemeEditor;
+  private world!:World;
+  private cube!:Cube;
+  private controls!:Controls;
+  private scrambler!:Scrambler;
+  private transition!:Transition;
+  private timer!:Timer;
+  private preferences!:Preferences;
+  private scores!:Scores;
+  private storage!:Storage;
+  private confetti!:Confetti;
+  private themes!:Themes;
+  private themeEditor!:ThemeEditor;
 
 
 
@@ -58,32 +54,105 @@ export class GameComponent implements OnInit, AfterViewInit{
 
 
   constructor() {
+  }
+  
+
+  ngOnInit() {
+
+  }
+  ngAfterViewInit() {
 
     this.dom = {
       ui: document.querySelector( '.ui' ),
-      game: document.querySelector( '.ui__game' ),
-      back: document.querySelector( '.ui__background' ),
-      prefs: document.querySelector( '.ui__prefs' ),
-      theme: document.querySelector( '.ui__theme' ),
-      stats: document.querySelector( '.ui__stats' ),
+      game: document.querySelector( '.ui .game' ),
+      back: document.querySelector( '.ui .background' ),
+      prefs: document.querySelector( '.ui .prefs' ),
+      theme: document.querySelector( '.ui .theme' ),
+      stats: document.querySelector( '.ui .stats' ),
       texts: {
-        title: document.querySelector( '.text--title' ),
-        note: document.querySelector( '.text--note' ),
-        timer: document.querySelector( '.text--timer' ),
-        complete: document.querySelector( '.text--complete' ),
-        best: document.querySelector( '.text--best-time' ),
-        theme: document.querySelector( '.text--theme' ),
+        title: document.querySelector( '.texts .title' ),
+        note: document.querySelector( '.texts .note' ),
+        timer: document.querySelector( '.texts .timer' ),
+        complete: document.querySelector( '.texts .complete' ),
+        best: document.querySelector( '.texts .best-time' ),
+        theme: document.querySelector( '.texts .theme' ),
       },
       buttons: {
-        prefs: document.querySelector( '.btn--prefs' ),
-        back: document.querySelector( '.btn--back' ),
-        stats: document.querySelector( '.btn--stats' ),
-        reset: document.querySelector( '.btn--reset' ),
-        theme: document.querySelector( '.btn--theme' ),
+        prefs: document.querySelector( '.buttons .prefs' ),
+        back: document.querySelector( '.buttons .back' ),
+        stats: document.querySelector( '.buttons .stats' ),
+        reset: document.querySelector( '.buttons .reset' ),
+        theme: document.querySelector( '.buttons .theme' ),
       },
     };
 
+    console.log(this.dom.texts.title);
+    
+    this.convertRange();
+    window.addEventListener( 'touchmove', () => {} );
+    document.addEventListener( 'touchmove',  event => { event.preventDefault(); }, { passive: false } );
+
+    this.create();
+
+  }
+
+  /**
+   * .range__list
+   */
+  private convertRange() {
+    const RangeHTML = [
+
+      '<div class="range">',
+        '<div class="range__label"></div>',
+        '<div class="range__track">',
+          '<div class="range__track-line"></div>',
+          '<div class="range__handle"><div></div></div>',
+        '</div>',
+        '<div class="list"></div>',
+      '</div>',
+    
+    ].join( '\n' );
+    
+    document.querySelectorAll( 'range' ).forEach( (el:any) => {
+    
+      const temp = document.createElement( 'div' );
+      temp.innerHTML = RangeHTML;
+    
+      const range:any = temp.querySelector( '.range' );
+      const rangeLabel = range.querySelector( '.range__label' );
+      const rangeList = range.querySelector( '.range > .list' );
+
+    
+      range.setAttribute( 'name', el.getAttribute( 'name' ) );
+      rangeLabel.innerHTML = el.getAttribute( 'title' );
+    
+      if ( el.hasAttribute( 'color' ) ) {
+    
+        range.classList.add( 'range--type-color' );
+        range.classList.add( 'range--color-' + el.getAttribute( 'name' ) );
+    
+      }
+    
+      if ( el.hasAttribute( 'list' ) ) {
+    
+        el.getAttribute( 'list' ).split( ',' ).forEach( (listItemText: any) => {
+    
+          const listItem = document.createElement( 'div' );
+          listItem.innerHTML = listItemText;
+          rangeList.appendChild( listItem );
+    
+        } );
+    
+      }
+    
+      el.parentNode.replaceChild( range, el );
+    
+    } );
+  }
+
+  private create() {
     this.world = new World( this );
+
     this.cube = new Cube( this );
     this.controls = new Controls( this );
     this.scrambler = new Scrambler( this );
@@ -122,22 +191,11 @@ export class GameComponent implements OnInit, AfterViewInit{
 
   }
 
-  ngOnInit() {
-
-  }
-  ngAfterViewInit() {
-    window.addEventListener( 'touchmove', () => {} );
-    document.addEventListener( 'touchmove',  event => { event.preventDefault(); }, { passive: false } );
-
-
-  }
-
   private initActions() {
 
     let tappedTwice = false;
 
-    this.dom.game.addEventListener( 'click', (event: any) => {
-
+    this.dom.game.addEventListener( 'click', () => {
       if ( this.transition.activeTransitions > 0 ) return;
       if ( this.state === STATE.Playing ) return;
 
@@ -162,6 +220,7 @@ export class GameComponent implements OnInit, AfterViewInit{
         this.stats( HIDE );
 
       } 
+      return;
 
     }, false );
 
@@ -213,7 +272,6 @@ export class GameComponent implements OnInit, AfterViewInit{
     this.dom.buttons.stats.onclick = (event:any) => this.stats( SHOW );
 
     this.controls.onSolved = () => this.complete( SHOW );
-
   }
 
   private game( show:boolean ) {
@@ -338,8 +396,8 @@ export class GameComponent implements OnInit, AfterViewInit{
 
       setTimeout( () => this.transition.preferences( SHOW ), 1000 );
       setTimeout( () => {
-
-        const gameCubeData = JSON.parse( localStorage.getItem( 'theCube_savedState' ) );
+        const theCube_savedState = localStorage.getItem( 'theCube_savedState' );
+        const gameCubeData = theCube_savedState ? JSON.parse( theCube_savedState ):null;
 
         if ( !gameCubeData ) {
 
@@ -396,7 +454,7 @@ export class GameComponent implements OnInit, AfterViewInit{
       this.saved = false;
 
       this.controls.disable();
-      this.timer.stop();
+      this.timer._stop();
       this.storage.clearGame();
 
       this.bestTime = this.scores.addScore( this.timer.deltaTime );
@@ -427,15 +485,16 @@ export class GameComponent implements OnInit, AfterViewInit{
         this.confetti.stop();
 
         this.transition.stats( SHOW );
-        this.transition.elevate( 0 );
+        this.transition.elevate( HIDE );
 
       }, 1000 );
 
-      return false;
+      // return false;
 
     }
 
   }
+
 
 }
 

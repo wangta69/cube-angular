@@ -1,6 +1,32 @@
+import * as THREE from 'three';
+import {Animation} from './Animation';
+import {Particle} from './Particle';
+
 export class ConfettiStage extends Animation {
   private game;
-  constructor( game, parent, distance, count ) {
+  private parent;
+
+  private distanceFromCube;
+
+  private count;
+  private particles:any[] = [];
+
+  private holder:THREE.Object3D;
+
+  private object:THREE.Object3D;
+
+  // private resizeViewport = this.resizeViewport.bind( this );
+
+  private geometry;
+  private material;
+
+  private options;
+  private height!:number;
+  private width!:number;
+
+
+
+  constructor( game: any, parent: any, distance: any, count: any ) {
 
     super( false );
 
@@ -31,8 +57,8 @@ export class ConfettiStage extends Animation {
     while ( i-- ) this.particles.push( new Particle( this ) );
 
   }
-
-  start() {
+/*
+  private start() {
 
     this.time = performance.now();
     this.playing = true;
@@ -44,7 +70,7 @@ export class ConfettiStage extends Animation {
 
   }
 
-  stop( callback ) {
+  private stop( callback ) {
 
     this.playing = false;
     this.completed = 0;
@@ -52,15 +78,12 @@ export class ConfettiStage extends Animation {
 
   }
 
-  reset() {
-
+  private reset() {
     super.stop();
-
     this.callback();
-
   }
 
-  update() {
+  private update() {
 
     const now = performance.now();
     const delta = now - this.time;
@@ -74,10 +97,10 @@ export class ConfettiStage extends Animation {
     if ( ! this.playing && this.completed == this.count ) this.reset();
 
   }
+*/
+  private resizeViewport() {
 
-  resizeViewport() {
-
-    const fovRad = this.game.world.camera.fov * THREE.Math.DEG2RAD;
+    const fovRad = this.game.world.camera.fov * THREE.MathUtils.DEG2RAD;
 
     this.height = 2 * Math.tan( fovRad / 2 ) * ( this.game.world.camera.position.length() - this.distanceFromCube );
     this.width = this.height * this.game.world.camera.aspect;
