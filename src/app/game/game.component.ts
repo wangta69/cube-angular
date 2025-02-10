@@ -1,4 +1,7 @@
 import { Component,OnInit,AfterViewInit,ViewChild,ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSliderModule} from '@angular/material/slider';
+
 import * as THREE from 'three';
 import {SHOW, HIDE, STATE, BUTTONS, States} from './objects/Constants';
 import {World} from './objects/World';
@@ -17,6 +20,7 @@ import {ThemeEditor} from './objects/ThemeEditor';
 @Component({
   selector: 'app-root',
   schemas: [NO_ERRORS_SCHEMA],
+  imports: [MatIconModule, MatSliderModule],
   templateUrl: './game.html',
   styleUrls: ['./game.scss']
 })
@@ -52,12 +56,33 @@ export class GameComponent implements OnInit, AfterViewInit{
 
   private bestTime=false;
 
+  disabled = false;
+  max = 100;
+  min = 0;
+  showTicks = false;
+  step = 1;
+  thumbLabel = false;
+  value = 0;
 
   constructor() {
   }
   
 
   ngOnInit() {
+
+
+
+  }
+
+  public dragEnd(ev: any) {
+
+  }
+
+  public dragStart(ev: any) {
+
+  }
+
+  public valueChange(ev: any) {
 
   }
   ngAfterViewInit() {
@@ -78,17 +103,16 @@ export class GameComponent implements OnInit, AfterViewInit{
         theme: document.querySelector( '.texts .theme' ),
       },
       buttons: {
-        prefs: document.querySelector( '.buttons .prefs' ),
-        back: document.querySelector( '.buttons .back' ),
-        stats: document.querySelector( '.buttons .stats' ),
-        reset: document.querySelector( '.buttons .reset' ),
-        theme: document.querySelector( '.buttons .theme' ),
+        prefs: document.querySelector( '.buttons .btn-prefs' ),
+        back: document.querySelector( '.buttons .btn-back' ),
+        stats: document.querySelector( '.buttons .btn-stats' ),
+        reset: document.querySelector( '.buttons .btn-reset' ),
+        theme: document.querySelector( '.buttons .btn-theme' ),
       },
     };
 
-    console.log(this.dom.texts.title);
-    
-    this.convertRange();
+   
+    // this.convertRange();
     window.addEventListener( 'touchmove', () => {} );
     document.addEventListener( 'touchmove',  event => { event.preventDefault(); }, { passive: false } );
 
@@ -98,15 +122,15 @@ export class GameComponent implements OnInit, AfterViewInit{
 
   /**
    * .range__list
-   */
+   
   private convertRange() {
     const RangeHTML = [
 
       '<div class="range">',
-        '<div class="range__label"></div>',
-        '<div class="range__track">',
-          '<div class="range__track-line"></div>',
-          '<div class="range__handle"><div></div></div>',
+        '<div class="label"></div>',
+        '<div class="track">',
+          '<div class="track-line"></div>',
+          '<div class="handle"><div></div></div>',
         '</div>',
         '<div class="list"></div>',
       '</div>',
@@ -119,8 +143,8 @@ export class GameComponent implements OnInit, AfterViewInit{
       temp.innerHTML = RangeHTML;
     
       const range:any = temp.querySelector( '.range' );
-      const rangeLabel = range.querySelector( '.range__label' );
-      const rangeList = range.querySelector( '.range > .list' );
+      const rangeLabel = range.querySelector( '.range .label' );
+      const rangeList = range.querySelector( '.range .list' );
 
     
       range.setAttribute( 'name', el.getAttribute( 'name' ) );
@@ -128,9 +152,9 @@ export class GameComponent implements OnInit, AfterViewInit{
     
       if ( el.hasAttribute( 'color' ) ) {
     
-        range.classList.add( 'range--type-color' );
-        range.classList.add( 'range--color-' + el.getAttribute( 'name' ) );
-    
+        range.classList.add( 'type-color' );
+        range.classList.add( 'color-' + el.getAttribute( 'name' ) );
+  
       }
     
       if ( el.hasAttribute( 'list' ) ) {
@@ -149,7 +173,7 @@ export class GameComponent implements OnInit, AfterViewInit{
     
     } );
   }
-
+*/
   private create() {
     this.world = new World( this );
 
@@ -225,7 +249,6 @@ export class GameComponent implements OnInit, AfterViewInit{
     }, false );
 
     this.controls.onMove = () => {
-
       if ( this.newGame ) {
         
         this.timer._start( true );
@@ -266,11 +289,8 @@ export class GameComponent implements OnInit, AfterViewInit{
     };
 
     this.dom.buttons.prefs.onclick = (event:any) => this.prefs( SHOW );
-
     this.dom.buttons.theme.onclick = (event:any) => this.theme( SHOW );
-
     this.dom.buttons.stats.onclick = (event:any) => this.stats( SHOW );
-
     this.controls.onSolved = () => this.complete( SHOW );
   }
 
@@ -305,7 +325,6 @@ export class GameComponent implements OnInit, AfterViewInit{
       }, this.transition.durations.zoom - 1000 );
 
       setTimeout( () => {
-
         this.controls.enable();
         if ( ! this.newGame ) this.timer._start( true );
 

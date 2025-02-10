@@ -18,10 +18,9 @@ export class Timer extends Animation {
   }
 
   public _start( continueGame:boolean ) {
-
     this.startTime = continueGame ? ( Date.now() - this.deltaTime ) : Date.now();
     this.deltaTime = 0;
-    this.converted = this.convert();
+    this.convert();
 
     super.start();
 
@@ -56,8 +55,8 @@ export class Timer extends Animation {
     this.deltaTime = this.currentTime - this.startTime;
     this.convert();
 
-    if ( this.converted != old ) {
 
+    if ( this.converted != old ) {
       localStorage.setItem( 'theCube_time', this.deltaTime.toString() );
       this.setText();
 
@@ -66,18 +65,14 @@ export class Timer extends Animation {
   }
 
   private convert() {
-
-    const seconds =( this.deltaTime / 1000 ) % 60 ;
-    const minutes = ( this.deltaTime / ( 1000 * 60 ) ) ;
-
-    return minutes + ':' + ( seconds < 10 ? '0' : '' ) + seconds;
+    const seconds =Math.floor(( this.deltaTime / 1000 ) % 60) ;
+    const minutes = Math.floor( this.deltaTime / ( 1000 * 60 ) ) ;
+    this.converted = minutes + ':' + ( seconds < 10 ? '0' : '' ) + seconds;
 
   }
 
   private setText() {
-
     this.game.dom.texts.timer.innerHTML = this.converted;
-
   }
 
 }

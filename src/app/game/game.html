@@ -6,78 +6,187 @@
   <div class="game"></div>
 
   <div class="texts">
-    <h1 class="title">
+    <h1 class="text title">
       <span>THE</span>
       <span>CUBE</span>
     </h1>
-    <div class="note">
+    <div class="text note">
       Double tap to start
     </div>
-    <div class="timer">
+    <div class="text timer">
       0:00
     </div>
-    <div class="complete">
+    <div class="text complete">
       <span>Complete!</span>
     </div>
-    <div class="best-time">
-      <icon trophy></icon>
+    <div class="text best-time">
+      <mat-icon svgIcon="trophy"></mat-icon>
       <span>Best Time!</span>
     </div>
   </div>
 
-  <div class="prefs">
+  <!-- <div class="prefs">
     <range class="range" name="size" title="Cube Size" list="2,3,4,5"></range>
     <range class="range" name="flip" title="Flip Type" list="Swift&nbsp;,Smooth,Bounce"></range>
     <range class="range" name="scramble" title="Scramble Length" list="20,25,30"></range>
     <range class="range" name="fov" title="Camera Angle" list="Ortographic,Perspective"></range>
     <range class="range" name="theme" title="Color Scheme" list="Cube,Erno,Dust,Camo,Rain"></range>
+  </div> -->
+
+
+
+  <div class="prefs">
+    <div class="range" name="size">
+      <div class="label">Cube Size</div>
+      <div class="track">
+        <div class="track-line"></div>
+        <div class="handle">
+          <div style="background: rgb(65, 170, 200);"></div>
+        </div>
+      </div>
+      <div class="list">
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+      </div>
+    </div>
+
+
+
+
+    <div class="range" name="flip">
+      <div class="label">Flip Type</div>
+      <div class="track">
+        <div class="track-line"></div>
+        <div class="handle"><div style="background: rgb(65, 170, 200);"></div></div>
+      </div>
+      <div class="list">
+        <div>Swift&nbsp;</div>
+        <div>Smooth</div>
+        <div>Bounce</div>
+      </div>
+    </div>
+
+    <div class="range" name="scramble">
+      <div class="label">Scramble Length</div>
+      <div class="track">
+        <div class="track-line"></div>
+        <div class="handle"><div style="background: rgb(65, 170, 200);"></div></div>
+      </div>
+      <div class="list">
+        <div>20</div>
+        <div>25</div>
+        <div>30</div>
+      </div>
+    </div>
+
+    <div class="range" name="fov">
+      <div class="label">Camera Angle</div>
+      <div class="track">
+        <div class="track-line"></div>
+        <div class="handle"><div style="background: rgb(65, 170, 200);"></div></div>
+      </div>
+      <div class="list">
+        <div>Ortographic</div>
+        <div>Perspective</div>
+      </div>
+    </div>
+
+    <div class="range" name="theme">
+      <div class="label">Color Scheme</div>
+      <div class="track">
+        <div class="track-line"></div>
+        <div class="handle"><div style="background: rgb(65, 170, 200);"></div></div>
+      </div>
+      <div class="list">
+        <div>Cube</div>
+        <div>Erno</div>
+        <div>Dust</div>
+        <div>Camo</div>
+        <div>Rain</div>
+      </div>
+    </div>
   </div>
 
-  <div class="theme">
+
+
+  <!-- <div class="theme">
     <range class="range" name="hue" title="Hue" color></range>
     <range class="range" name="saturation" title="Saturation" color></range>
     <range class="range" name="lightness" title="Lightness" color></range>
+  </div> -->
+
+  <div class="theme">
+    <div class="range range--type-color range--color-hue" name="hue">
+      <div class="label" style="opacity: 1; transform: translate3d(0px, 0em, 0px);">Hue</div>
+      <div class="track">
+      <div class="track-line" style="opacity: 1; transform: translate3d(0px, 0em, 0px) scale3d(1, 1, 1);"></div>
+      <div class="handle" style="left: 60%; color: rgb(209, 213, 219); opacity: 1; pointer-events: all; transform: translate3d(0px, 0em, 0px) scale3d(1, 1, 1);"><div></div></div>
+      </div>
+      <div class="list"></div>
+    </div>
+
+    <div class="range range--type-color range--color-saturation" name="saturation">
+      <div class="label" style="opacity: 1; transform: translate3d(0px, 0em, 0px);">Saturation</div>
+      <div class="track" style="color: rgb(0, 101, 255);">
+      <div class="track-line" style="opacity: 1; transform: translate3d(0px, 0em, 0px) scale3d(1, 1, 1);"></div>
+      <div class="handle" style="left: 12.1951%; color: rgb(209, 213, 219); opacity: 1; pointer-events: all; transform: translate3d(0px, 0em, 0px) scale3d(1, 1, 1);"><div></div></div>
+      </div>
+      <div class="list"></div>
+    </div>
+
+    <div class="range range--type-color range--color-lightness" name="lightness">
+      <div class="label" style="opacity: 1; transform: translate3d(0px, 0em, 0px);">Lightness</div>
+      <div class="track" style="color: rgb(112, 124, 142);">
+      <div class="track-line" style="opacity: 1; transform: translate3d(0px, 0em, 0px) scale3d(1, 1, 1);"></div>
+      <div class="handle" style="left: 83.9216%; color: rgb(209, 213, 219); opacity: 1; pointer-events: all; transform: translate3d(0px, 0em, 0px) scale3d(1, 1, 1);"><div></div></div>
+      </div>
+      <div class="list"></div>
+    </div>
   </div>
 
+
+
   <div class="stats">
-    <div class="stats" name="cube-size">
+    <div name="cube-size">
       <i>Cube:</i><b>3x3x3</b>
     </div>
-    <div class="stats" name="total-solves">
+    <div name="total-solves">
       <i>Total solves:</i><b>-</b>
     </div>
-    <div class="stats" name="best-time">
+    <div name="best-time">
       <i>Best time:</i><b>-</b>
     </div>
-    <div class="stats" name="worst-time">
+    <div name="worst-time">
       <i>Worst time:</i><b>-</b>
     </div>
-    <div class="stats" name="average-5">
+    <div name="average-5">
       <i>Average of 5:</i><b>-</b>
     </div>
-    <div class="stats" name="average-12">
+    <div name="average-12">
       <i>Average of 12:</i><b>-</b>
     </div>
-    <div class="stats" name="average-25">
+    <div name="average-25">
       <i>Average of 25:</i><b>-</b>
     </div>
   </div>
 
   <div class="buttons">
-    <button class="btn bl stats">
-      <icon trophy></icon>
+    <button class="btn bl btn-stats">
+      <mat-icon svgIcon="trophy"></mat-icon>
     </button>
-    <button class="btn br prefs">
-      <icon settings></icon>
+    <button class="btn br btn-prefs">
+      <mat-icon svgIcon="settings"></mat-icon>
     </button>
-    <button class="btn bl back">
-      <icon back></icon>
+    <button class="btn bl btn-back">
+      <mat-icon svgIcon="back"></mat-icon>
     </button>
-    <button class="btn br theme">
-      <icon theme></icon>
+    <button class="btn br btn-theme">
+      <mat-icon svgIcon="theme"></mat-icon>
     </button>
-    <button class="btn br reset">
-      <icon reset></icon>
+    <button class="btn br btn-reset">
+      <mat-icon svgIcon="reset"></mat-icon>
     </button>
   </div>
 

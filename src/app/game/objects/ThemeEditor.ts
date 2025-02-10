@@ -31,13 +31,9 @@ export class ThemeEditor {
 
     this.editColor = ( color === null) ? 'R' : color;
 
-    const hsl = new THREE.Color( this.game.themes.getColors()[ this.editColor ] );
+    const hsl:any = new THREE.Color( this.game.themes.getColors()[ this.editColor ] );
 
-    // ? const { h, s, l } = hsl.getHSL( hsl );
-    console.log('setHSL ---------------- 다시 보기');
-    const h = 0;
-    const s = 0;
-    const l = 0;
+    const { h, s, l } = hsl.getHSL( hsl );
 
     const { hue, saturation, lightness } = this.game.preferences.ranges;
 
@@ -60,12 +56,17 @@ export class ThemeEditor {
           saturation.setValue( ( so + ( s - so ) * tween.value ) * 100 );
           lightness.setValue( ( lo + ( l - lo ) * tween.value ) * 100 );
 
+          const colorTween:any = colorOld.clone().lerp( hsl, tween.value );
+          const colorTweenStyle = colorTween.getStyle();
+          const colorTweenHex = colorTween.getHSL( colorTween);
+
+          /*
+          [original]
           const colorTween = colorOld.clone().lerp( hsl, tween.value );
 
           const colorTweenStyle = colorTween.getStyle();
-          // const colorTweenHex = colorTween.getHSL( colorTween );
-          console.log('getHSL 다식 보기');
-          const colorTweenHex = colorTween.getHSL( tween.value );
+          const colorTweenHex = colorTween.getHSL( colorTween );
+          */
           hue.handle.style.color = colorTweenStyle;
           saturation.handle.style.color = colorTweenStyle;
           lightness.handle.style.color = colorTweenStyle;
@@ -130,17 +131,14 @@ export class ThemeEditor {
   }
 
   public colorPicker( enable: boolean ) {
-
-    if ( enable ) {
-
-      this.game.dom.game.addEventListener( 'click', this.getPieceColor.bind(this), false );
-
-    } else {
-
-      this.game.dom.game.removeEventListener( 'click', this.getPieceColor.bind(this), false );
-
+    if (!this.getPieceColor) {
+      this.getPieceColor = this.getPieceColor.bind(this);
     }
-
+    if ( enable ) {
+      this.game.dom.game.addEventListener( 'click', this.getPieceColor, false );
+    } else {
+      this.game.dom.game.removeEventListener( 'click', this.getPieceColor, false );
+    }
   }
 
   private getPieceColor( event:any ) {

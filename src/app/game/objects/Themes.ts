@@ -75,24 +75,18 @@ export class Themes {
   }
 
   private setTheme( theme:string, force = false ) {
-
     if ( theme === this.theme && force === false ) return;
     if ( theme) this.theme = theme;
 
     const colors = this.getColors();
 
-    this.game.dom.prefs.querySelectorAll( '.range__handle div' ).forEach( (range: any) => {
-
+    this.game.dom.prefs.querySelectorAll( '.range .handle div' ).forEach( (range: any) => {
       range.style.background = '#' + colors.R.toString(16).padStart(6, '0');
-
     } );
 
     this.game.cube.updateColors( colors );
-
     this.game.confetti.updateColors( colors );
-
     this.game.dom.back.style.background = '#' + colors.G.toString(16).padStart(6, '0');
-
   }
 
 }

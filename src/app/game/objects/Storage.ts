@@ -188,7 +188,6 @@ export class Storage {
   }
 
   private savePreferences() {
-
     const preferences = {
       cubeSize: this.game.cube.size,
       flipConfig: this.game.controls.flipConfig,

@@ -47,26 +47,28 @@ export class Draggable {
 
         this.onDragStart( this.position );
 
+        if (!this.drag.move) {
+          this.drag.move = this.drag.move.bind(this);
+        }
+        if (!this.drag.end) {
+          this.drag.end = this.drag.end.bind(this);
+        }
         
-        window.addEventListener( ( this.touch ) ? 'touchmove' : 'mousemove', this.drag.move.bind(this), false );
-        window.addEventListener( ( this.touch ) ? 'touchend' : 'mouseup', this.drag.end.bind(this), false );
+        window.addEventListener( ( this.touch ) ? 'touchmove' : 'mousemove', this.drag.move, false );
+        window.addEventListener( ( this.touch ) ? 'touchend' : 'mouseup', this.drag.end, false );
 
       },
 
       move: ( event: any ) => {
         if ( this.options.calcDelta ) {
-
           this.position.old = this.position.current.clone();
-
         }
 
         this.getPositionCurrent( event );
 
         if ( this.options.calcDelta ) {
-
           this.position.delta = this.position.current.clone().sub( this.position.old );
           this.position.drag = this.position.current.clone().sub( this.position.start );
-
         }
 
         this.onDragMove( this.position );
@@ -78,9 +80,8 @@ export class Draggable {
         this.getPositionCurrent( event );
 
         this.onDragEnd( this.position );
-
-        window.removeEventListener( ( this.touch ) ? 'touchmove' : 'mousemove', this.drag.move.bind(this), false );
-        window.removeEventListener( ( this.touch ) ? 'touchend' : 'mouseup', this.drag.end.bind(this), false );
+        window.removeEventListener( ( this.touch ) ? 'touchmove' : 'mousemove', this.drag.move, false );
+        window.removeEventListener( ( this.touch ) ? 'touchend' : 'mouseup', this.drag.end, false );
 
       },
 
@@ -90,14 +91,17 @@ export class Draggable {
   }
 
   public enable() {
-    this.element.addEventListener( 'touchstart', this.drag.start.bind(this), false );
-    this.element.addEventListener( 'mousedown', this.drag.start.bind(this), false );
+    if (!this.drag.start) {
+      this.drag.start = this.drag.start.bind(this);
+    }
+
+    this.element.addEventListener( 'touchstart', this.drag.start, false );
+    this.element.addEventListener( 'mousedown', this.drag.start, false );
   }
 
   public disable() {
-
-    this.element.removeEventListener( 'touchstart', this.drag.start.bind(this), false );
-    this.element.removeEventListener( 'mousedown', this.drag.start.bind(this), false );
+    this.element.removeEventListener( 'touchstart', this.drag.start, false );
+    this.element.removeEventListener( 'mousedown', this.drag.start, false );
   }
 
   private getPositionCurrent( event: any ) {

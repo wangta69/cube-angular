@@ -79,7 +79,7 @@ export class Scores {
 
     if ( value === 0 ) value = '-';
 
-    this.game.dom.stats.querySelector( `.stats[name="${name}"] b` ).innerHTML = value;
+    this.game.dom.stats.querySelector( `div[name="${name}"] b` ).innerHTML = value;
 
   }
 

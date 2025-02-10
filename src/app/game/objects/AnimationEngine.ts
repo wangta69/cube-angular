@@ -31,7 +31,7 @@ export class AnimationEngine {
 
   }
 
-  private add( animation: any ) {
+  protected add( animation: any ) {
 
     animation.id = this.uniqueID ++;
 

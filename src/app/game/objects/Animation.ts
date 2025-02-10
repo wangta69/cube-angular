@@ -8,19 +8,14 @@ export class Animation {
 
     this.animationEngine = new AnimationEngine();
     if ( start === true ) this.start();
-
   }
 
   public start() {
-
     this.animationEngine.add( this );
-
   }
 
   public stop() {
-
     this.animationEngine.remove( this );
-
   }
 
   public update( delta: number ) {}

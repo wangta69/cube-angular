@@ -280,7 +280,6 @@ export class Transition {
   private ranges( ranges:any, type:string, show:boolean ) {
 
     this.activeTransitions++;
-
     this.tweens[ type ].forEach( (tween:any) => { tween.stop(); tween = null; } );
 
     const easing = show ? Easing.Power.Out(2) : Easing.Power.In(3);
@@ -290,13 +289,12 @@ export class Transition {
 
     ranges.forEach( ( range:any, rangeIndex:number ) => {
     
-      const label = range.querySelector( '.range__label' );
-      const track = range.querySelector( '.range__track-line' );
-      const handle = range.querySelector( '.range__handle' );
-      const list = range.querySelectorAll( '.range__list div' );
+      const label = range.querySelector( '.range .label' );
+      const track = range.querySelector( '.range .track-line' );
+      const handle = range.querySelector( '.range .handle' );
+      const list = range.querySelectorAll( '.range .list div' );
 
       const delay = rangeIndex * ( show ? 120 : 100 );
-
       label.style.opacity = show ? 0 : 1;
       track.style.opacity = show ? 0 : 1;
       handle.style.opacity = show ? 0 : 1;
@@ -392,7 +390,6 @@ export class Transition {
 
     if ( title.querySelector( 'span i' ) === null )
       title.querySelectorAll( 'span' ).forEach( (span: any) => this.splitLetters( span ) );
-
     const letters = title.querySelectorAll( 'i' );
 
     this.flipLetters( 'title', letters, show );
@@ -400,7 +397,6 @@ export class Transition {
     title.style.opacity = 1;
 
     const note = this.game.dom.texts.note;
-
     this.tweens.title[ letters.length ] = new Tween( {
       target: note.style,
       easing: Easing.Sine.InOut(),
@@ -409,7 +405,6 @@ export class Transition {
       from: { opacity: show ? 0 : ( parseFloat( getComputedStyle( note ).opacity ) ) },
       to: { opacity: show ? 1 : 0 },
     } );
-
     setTimeout( () => this.activeTransitions--, this.durations.title );
 
   }
