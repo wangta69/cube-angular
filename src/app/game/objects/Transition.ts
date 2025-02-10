@@ -235,7 +235,7 @@ export class Transition {
 
     let tweenId = -1;
 
-    const stats = this.game.dom.stats.querySelectorAll( '.stats' );
+    const stats = this.game.dom.stats.querySelectorAll( 'div' );
     const easing = show ? Easing.Power.Out( 2 ) : Easing.Power.In( 3 );
 
     stats.forEach( ( stat: any, index:number ) => {
