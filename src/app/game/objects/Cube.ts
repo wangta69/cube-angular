@@ -2,6 +2,7 @@
 import * as THREE from 'three';
 import {RoundedBoxGeometry} from './RoundedBoxGeometry';
 import {RoundedPlaneGeometry} from './Functions';
+// import { RoundedBoxGeometry } from './jsm/geometries/RoundedBoxGeometry.js';
 type SizeRange = 2|3|4|5;
 
 export class Cube {
@@ -158,8 +159,10 @@ export class Cube {
     const mainMaterial = new THREE.MeshLambertMaterial();
 
     const pieceMesh = new THREE.Mesh(
-      new THREE.BoxGeometry( pieceSize, pieceSize, pieceSize),
+      // new THREE.BoxGeometry( pieceSize, pieceSize, pieceSize),
       // new RoundedBoxGeometry( pieceSize, this.geometry.pieceCornerRadius, 3 ),
+      new RoundedBoxGeometry( pieceSize, pieceSize, pieceSize, 3, this.geometry.pieceCornerRadius ),
+      // new RoundedBoxGeometry( pieceSize, pieceSize, pieceSize, 1, 0.1 ),
       mainMaterial.clone()
     );
 
@@ -251,11 +254,6 @@ export class Cube {
 
       piece.position.set( position.x, position.y, position.z );
       piece.rotation.set( rotation.x, rotation.y, rotation.z );
-
     } );
-
   }
-
-
-
 }
