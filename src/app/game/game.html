@@ -1,9 +1,11 @@
 
 <div class="ui">
 
-  <div class="background"></div>
+  
 
   <div class="game"></div>
+  
+  <div class="background"></div>
 
   <div class="texts">
     <h1 class="text title">
@@ -25,14 +27,6 @@
     </div>
   </div>
 
-  <!-- <div class="prefs">
-    <range class="range" name="size" title="Cube Size" list="2,3,4,5"></range>
-    <range class="range" name="flip" title="Flip Type" list="Swift&nbsp;,Smooth,Bounce"></range>
-    <range class="range" name="scramble" title="Scramble Length" list="20,25,30"></range>
-    <range class="range" name="fov" title="Camera Angle" list="Ortographic,Perspective"></range>
-    <range class="range" name="theme" title="Color Scheme" list="Cube,Erno,Dust,Camo,Rain"></range>
-  </div> -->
-
 
 
   <div class="prefs">
@@ -41,7 +35,7 @@
       <div class="track">
         <div class="track-line"></div>
         <div class="handle">
-          <div style="background: rgb(65, 170, 200);"></div>
+          <div></div>
         </div>
       </div>
       <div class="list">
@@ -51,18 +45,14 @@
         <div>5</div>
       </div>
     </div>
-
-
-
-
     <div class="range" name="flip">
       <div class="label">Flip Type</div>
       <div class="track">
         <div class="track-line"></div>
-        <div class="handle"><div style="background: rgb(65, 170, 200);"></div></div>
+        <div class="handle"><div></div></div>
       </div>
       <div class="list">
-        <div>Swift&nbsp;</div>
+        <div>Swift</div>
         <div>Smooth</div>
         <div>Bounce</div>
       </div>
@@ -72,7 +62,7 @@
       <div class="label">Scramble Length</div>
       <div class="track">
         <div class="track-line"></div>
-        <div class="handle"><div style="background: rgb(65, 170, 200);"></div></div>
+        <div class="handle"><div ></div></div>
       </div>
       <div class="list">
         <div>20</div>
@@ -85,7 +75,7 @@
       <div class="label">Camera Angle</div>
       <div class="track">
         <div class="track-line"></div>
-        <div class="handle"><div style="background: rgb(65, 170, 200);"></div></div>
+        <div class="handle"><div></div></div>
       </div>
       <div class="list">
         <div>Ortographic</div>
@@ -97,7 +87,7 @@
       <div class="label">Color Scheme</div>
       <div class="track">
         <div class="track-line"></div>
-        <div class="handle"><div style="background: rgb(65, 170, 200);"></div></div>
+        <div class="handle"><div></div></div>
       </div>
       <div class="list">
         <div>Cube</div>
@@ -109,44 +99,34 @@
     </div>
   </div>
 
-
-
-  <!-- <div class="theme">
-    <range class="range" name="hue" title="Hue" color></range>
-    <range class="range" name="saturation" title="Saturation" color></range>
-    <range class="range" name="lightness" title="Lightness" color></range>
-  </div> -->
-
   <div class="theme">
-    <div class="range range--type-color range--color-hue" name="hue">
-      <div class="label" style="opacity: 1; transform: translate3d(0px, 0em, 0px);">Hue</div>
+    <div class="range type-color color-hue" name="hue">
+      <div class="label">Hue</div>
       <div class="track">
-      <div class="track-line" style="opacity: 1; transform: translate3d(0px, 0em, 0px) scale3d(1, 1, 1);"></div>
-      <div class="handle" style="left: 60%; color: rgb(209, 213, 219); opacity: 1; pointer-events: all; transform: translate3d(0px, 0em, 0px) scale3d(1, 1, 1);"><div></div></div>
+        <div class="track-line"></div>
+        <div class="handle"><div></div></div>
       </div>
       <div class="list"></div>
     </div>
 
-    <div class="range range--type-color range--color-saturation" name="saturation">
-      <div class="label" style="opacity: 1; transform: translate3d(0px, 0em, 0px);">Saturation</div>
-      <div class="track" style="color: rgb(0, 101, 255);">
-      <div class="track-line" style="opacity: 1; transform: translate3d(0px, 0em, 0px) scale3d(1, 1, 1);"></div>
-      <div class="handle" style="left: 12.1951%; color: rgb(209, 213, 219); opacity: 1; pointer-events: all; transform: translate3d(0px, 0em, 0px) scale3d(1, 1, 1);"><div></div></div>
+    <div class="range type-color color-saturation" name="saturation">
+      <div class="label">Saturation</div>
+      <div class="track">
+        <div class="track-line"></div>
+        <div class="handle"><div></div></div>
       </div>
       <div class="list"></div>
     </div>
 
-    <div class="range range--type-color range--color-lightness" name="lightness">
-      <div class="label" style="opacity: 1; transform: translate3d(0px, 0em, 0px);">Lightness</div>
-      <div class="track" style="color: rgb(112, 124, 142);">
-      <div class="track-line" style="opacity: 1; transform: translate3d(0px, 0em, 0px) scale3d(1, 1, 1);"></div>
-      <div class="handle" style="left: 83.9216%; color: rgb(209, 213, 219); opacity: 1; pointer-events: all; transform: translate3d(0px, 0em, 0px) scale3d(1, 1, 1);"><div></div></div>
+    <div class="range type-color color-lightness" name="lightness">
+      <div class="label">Lightness</div>
+      <div class="track">
+        <div class="track-line"></div>
+        <div class="handle"><div></div></div>
       </div>
       <div class="list"></div>
     </div>
   </div>
-
-
 
   <div class="stats">
     <div name="cube-size">

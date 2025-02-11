@@ -6,30 +6,10 @@ export class Scores {
     this.game = game;
 
     this.data = {
-      2: {
-        scores: [],
-        solves: 0,
-        best: 0,
-        worst: 0,
-      },
-      3: {
-        scores: [],
-        solves: 0,
-        best: 0,
-        worst: 0,
-      },
-      4: {
-        scores: [],
-        solves: 0,
-        best: 0,
-        worst: 0,
-      },
-      5: {
-        scores: [],
-        solves: 0,
-        best: 0,
-        worst: 0,
-      }
+      2: { scores: [], solves: 0, best: 0, worst: 0 },
+      3: { scores: [], solves: 0, best: 0, worst: 0 },
+      4: { scores: [], solves: 0, best: 0, worst: 0 },
+      5: { scores: [], solves: 0, best: 0, worst: 0 },
     };
 
   }
@@ -84,24 +64,16 @@ export class Scores {
   }
 
   private getAverage( count:number ) {
-
     const data = (this.data as any)[ this.game.cube.sizeGenerated ];
-
     if ( data.scores.length < count ) return 0;
-
     return this.convertTime( data.scores.slice( -count ).reduce( ( a:number, b:number ) => a + b, 0 ) / count );
-
   }
 
   private convertTime( time:number ) {
-
     if ( time <= 0 ) return 0;
-
     const seconds = ( time / 1000 ) % 60;
     const minutes = ( time / ( 1000 * 60 ) );
-
     return minutes + ':' + ( seconds < 10 ? '0' : '' ) + seconds;
-
   }
 
 }

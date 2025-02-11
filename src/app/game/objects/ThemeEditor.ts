@@ -76,9 +76,9 @@ export class ThemeEditor {
           lightness.track.style.color =
             this.colorFromHSL( colorTweenHex.h * 360, colorTweenHex.s * 100, 50 ).getStyle();
 
-          this.game.dom.theme.style.display = 'none';
-          this.game.dom.theme.offsetHeight;
-          this.game.dom.theme.style.display = '';
+          // this.game.dom.theme.style.display = 'none';
+          // this.game.dom.theme.offsetHeight;
+          // this.game.dom.theme.style.display = '';
 
         },
         onComplete: () => {
@@ -106,6 +106,8 @@ export class ThemeEditor {
 
     const { hue, saturation, lightness } = this.game.preferences.ranges;
 
+    console.log('this.game.preferences.ranges', this.game.preferences.ranges)
+
     const h = hue.value;
     const s = saturation.value;
     const l = lightness.value;
@@ -119,9 +121,9 @@ export class ThemeEditor {
     saturation.track.style.color = this.colorFromHSL( h, 100, 50 ).getStyle();
     lightness.track.style.color = this.colorFromHSL( h, s, 50 ).getStyle();
 
-    this.game.dom.theme.style.display = 'none';
-    this.game.dom.theme.offsetHeight;
-    this.game.dom.theme.style.display = '';
+    // this.game.dom.theme.style.display = 'none';
+    // this.game.dom.theme.offsetHeight;
+    // this.game.dom.theme.style.display = '';
 
     const theme = this.game.themes.theme;
 

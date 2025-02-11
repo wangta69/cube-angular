@@ -94,8 +94,11 @@ export class World extends Animation {
 
     this.lights = {
       holder:  new THREE.Object3D,
-      ambient: new THREE.AmbientLight( 0xffffff, 0.69 ),
-      front:   new THREE.DirectionalLight( 0xffffff, 0.36 ),
+      // ambient: new THREE.AmbientLight( 0xffffff, 0.69 ),
+      // front:   new THREE.DirectionalLight( 0xffffff, 0.36 ),
+      // back:    new THREE.DirectionalLight( 0xffffff, 0.19 ),
+      ambient: new THREE.AmbientLight( 0xffffff, 0.7),
+      front:   new THREE.DirectionalLight( 0xffffff, 3 ),
       back:    new THREE.DirectionalLight( 0xffffff, 0.19 ),
     };
 

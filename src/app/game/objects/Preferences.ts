@@ -18,7 +18,7 @@ export class Preferences {
         range: [ 2, 5 ],
         step: 1,
         onUpdate: (value:number) => {
-
+          console.log('update size'); 
           this.game.cube.size = value;
 
           this.game.preferences.ranges.scramble.list.forEach( ( item:any, i:number ) => {
@@ -36,7 +36,7 @@ export class Preferences {
         range: [ 0, 2 ],
         step: 1,
         onUpdate: (value: number) => {
-
+          console.log('update flip'); 
           this.game.controls.flipConfig = value;
 
         },
@@ -48,7 +48,7 @@ export class Preferences {
         range: [ 0, 2 ],
         step: 1,
         onUpdate: (value: number) => {
-
+          console.log('update scramble'); 
           this.game.scrambler.dificulty = value;
 
         },
@@ -59,7 +59,7 @@ export class Preferences {
         value: this.game.world.fov,
         range: [ 2, 45 ],
         onUpdate: (value:number) => {
-
+          console.log('update fov'); 
           this.game.world.fov = value;
           this.game.world.resize();
 
@@ -72,7 +72,7 @@ export class Preferences {
         range: [ 0, 4 ],
         step: 1,
         onUpdate: (value:number) => {
-
+          console.log('update theme'); 
           const theme = [ 'cube', 'erno', 'dust', 'camo', 'rain' ][ value ];
           this.game.themes.setTheme( theme );
 
@@ -83,21 +83,21 @@ export class Preferences {
       hue: new Range( 'hue', {
         value: 0,
         range: [ 0, 360 ],
-        onUpdate: (value:any) => this.game.themeEditor.updateHSL(),
+        onUpdate: (value:any) => {console.log('update huye'); this.game.themeEditor.updateHSL()},
         onComplete: () => this.game.storage.savePreferences(),
       } ),
 
       saturation: new Range( 'saturation', {
         value: 100,
         range: [ 0, 100 ],
-        onUpdate: (value:any) => this.game.themeEditor.updateHSL(),
+        onUpdate: (value:any) => {console.log('update saturation'); this.game.themeEditor.updateHSL()},
         onComplete: () => this.game.storage.savePreferences(),
       } ),
 
       lightness: new Range( 'lightness', {
         value: 50,
         range: [ 0, 100 ],
-        onUpdate: (value:any) => this.game.themeEditor.updateHSL(),
+        onUpdate: (value:any) => {console.log('update lightness'); this.game.themeEditor.updateHSL()},
         onComplete: () => this.game.storage.savePreferences(),
       } ),
 

@@ -25,9 +25,14 @@ export class Range {
       onUpdate: () => {},
       onComplete: () => {},
     }, options || {} );
+
+
     this.element = document.querySelector( '.range[name="' + name + '"]' );
     this.track = this.element.querySelector( '.range .track' );
     this.handle = this.element.querySelector( '.range .handle' );
+
+    console.log('range : name > ', name);
+    console.log('range : this.element > ', this.element);
     this.list = [].slice.call( this.element.querySelectorAll( '.range .list div' ) );
 
     this.value = options.value;
@@ -107,6 +112,7 @@ export class Range {
 
   private setHandlePosition() {
     this.handle.style.left = this.percentsFromValue( this.value ) * 100 + '%';
+    
   }
 
 }

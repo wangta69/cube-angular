@@ -69,18 +69,19 @@ export class Themes {
   }
 
   private getColors() {
-
+    console.log('getColors >> this.theme', this.theme, this.colors);
     return (this.colors as any)[ this.theme ];
 
   }
 
-  private setTheme( theme:string, force = false ) {
+  public setTheme( theme:string, force = false ) {
+    console.log('setTheme..........', theme, this.theme, false);
+    // if(!theme) return;
     if ( theme === this.theme && force === false ) return;
     if ( theme) this.theme = theme;
 
     const colors = this.getColors();
-
-    this.game.dom.prefs.querySelectorAll( '.range .handle div' ).forEach( (range: any) => {
+    this.game.dom.theme.querySelectorAll( '.range .handle div' ).forEach( (range: any) => {
       range.style.background = '#' + colors.R.toString(16).padStart(6, '0');
     } );
 
