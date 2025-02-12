@@ -31,21 +31,12 @@ export class World extends Animation {
     this.game = game;
 
     this.container = this.game.dom.game;
-    this.scene = new THREE.Scene();
 
-    this.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.container.appendChild( this.renderer.domElement );
 
-    this.camera = new THREE.PerspectiveCamera( 2, 1, 0.1, 10000 );
-    
-    this.stage = { width: 2, height: 3 };
-    this.fov = 10;
-
     this.createLights();
     
-    this.onResize = [];
-
     this.resize();
     window.addEventListener( 'resize', () => this.resize(), false );
 

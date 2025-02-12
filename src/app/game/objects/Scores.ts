@@ -1,17 +1,14 @@
 export class Scores {
   private game;
-  private data;
+  private data = {
+    2: { scores: [], solves: 0, best: 0, worst: 0 },
+    3: { scores: [], solves: 0, best: 0, worst: 0 },
+    4: { scores: [], solves: 0, best: 0, worst: 0 },
+    5: { scores: [], solves: 0, best: 0, worst: 0 },
+  }
+  
   constructor( game:any ) {
-
     this.game = game;
-
-    this.data = {
-      2: { scores: [], solves: 0, best: 0, worst: 0 },
-      3: { scores: [], solves: 0, best: 0, worst: 0 },
-      4: { scores: [], solves: 0, best: 0, worst: 0 },
-      5: { scores: [], solves: 0, best: 0, worst: 0 },
-    };
-
   }
 
   public addScore( time:number ) {
@@ -71,8 +68,8 @@ export class Scores {
 
   private convertTime( time:number ) {
     if ( time <= 0 ) return 0;
-    const seconds = ( time / 1000 ) % 60;
-    const minutes = ( time / ( 1000 * 60 ) );
+    const seconds = Math.floor( time / 1000 ) % 60;
+    const minutes = Math.floor( time / ( 1000 * 60 ) );
     return minutes + ':' + ( seconds < 10 ? '0' : '' ) + seconds;
   }
 

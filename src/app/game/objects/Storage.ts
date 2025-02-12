@@ -1,28 +1,23 @@
 import * as THREE from 'three';
 export class Storage {
   private game;
-  constructor( game:any ) {
 
+  constructor( game:any ) {
     this.game = game;
 
     const userVersion = localStorage.getItem( 'theCube_version' );
 
     if ( ! userVersion || userVersion !== (window as any).gameVersion ) {
-
       this.clearGame();
       this.clearPreferences();
       this.migrateScores();
       localStorage.setItem( 'theCube_version', (window as any).gameVersion );
-
     }
-
   }
 
   public init() {
-
     this.loadPreferences();
     this.loadScores();
-
   }
 
   public loadGame() {
@@ -164,12 +159,12 @@ export class Storage {
       this.game.world.resize();
 
       this.game.themes.colors = preferences.colors;
-      this.game.themes.setTheme( preferences.theme );
+      this.game.themes.setTheme( preferences.theme);
 
       return true;
 
     } catch (e) {
-
+      console.error(e);
       this.game.cube.size = 3;
       this.game.controls.flipConfig = 0;
       this.game.scrambler.dificulty = 1;
@@ -178,13 +173,10 @@ export class Storage {
       this.game.world.resize();
 
       this.game.themes.setTheme( 'cube' );
-
       this.savePreferences();
 
       return false;
-
     }
-
   }
 
   private savePreferences() {

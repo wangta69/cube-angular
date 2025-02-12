@@ -4,7 +4,7 @@ export class Range {
   private element:any;
   private track:any;
   private handle:any;
-  private list:any;
+  public list:any;
 
   private value:any;
   private min:number
@@ -31,8 +31,6 @@ export class Range {
     this.track = this.element.querySelector( '.range .track' );
     this.handle = this.element.querySelector( '.range .handle' );
 
-    console.log('range : name > ', name);
-    console.log('range : this.element > ', this.element);
     this.list = [].slice.call( this.element.querySelectorAll( '.range .list div' ) );
 
     this.value = options.value;

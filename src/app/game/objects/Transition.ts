@@ -5,7 +5,7 @@ import { gsap, Power2, Power3 } from 'gsap';
 export class Transition {
   private game;
 
-  private tweens:any = {};
+  private tweens:any = {buttons:{}, timer:[], title:[], best:[], complete:[], prefs:[], theme:[], stats:[]};
   public durations:any = {};
   private data = {
     cubeY: -0.2,
@@ -28,9 +28,6 @@ export class Transition {
     this.game.cube.animator.rotation.x = - Math.PI / 3;
     this.game.world.camera.zoom = this.data.cameraZoom;
     this.game.world.camera.updateProjectionMatrix();
-
-    this.tweens = {buttons:{}, timer:[], title:[], best:[], complete:[], prefs:[], theme:[], stats:[]};
-
   }
 
   public buttons( show: any, hide: any ) {
@@ -247,7 +244,6 @@ export class Transition {
           break;
         case 'theme':
           this.game.dom.theme.style.display = 'flex';
-          console.log('theme display flex start1')
           break;
       }
     }
@@ -308,7 +304,6 @@ export class Transition {
           transform : show ? 'translate3d(0, 0em, 0)': 'translate3d(0, 1em, 0)',
           opacity:show ? 1 : 0,
           onComplete: () =>{
-            // console.log('completed');
           }
         })
       });
@@ -332,7 +327,6 @@ export class Transition {
             break;
           case 'theme':
             this.game.dom.theme.style.display = 'none';
-            console.log('theme display none start1')
             break;
         }
       }

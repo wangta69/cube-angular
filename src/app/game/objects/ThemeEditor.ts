@@ -4,17 +4,12 @@ import {Easing} from './Constants';
 
 export class ThemeEditor {
   private game;
-  private editColor: string;
+  private editColor = 'R';
   private tweenHSL!: Tween;
 
   constructor( game: any ) {
-
     this.game = game;
-
-    this.editColor = 'R';
-
     this.getPieceColor = this.getPieceColor.bind( this );
-
   }
 
   private colorFromHSL( h:number, s:number, l:number ) {
@@ -82,7 +77,6 @@ export class ThemeEditor {
 
         },
         onComplete: () => {
-
           this.updateHSL();
           this.game.storage.savePreferences();
 
@@ -105,9 +99,6 @@ export class ThemeEditor {
   private updateHSL() {
 
     const { hue, saturation, lightness } = this.game.preferences.ranges;
-
-    console.log('this.game.preferences.ranges', this.game.preferences.ranges)
-
     const h = hue.value;
     const s = saturation.value;
     const l = lightness.value;

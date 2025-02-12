@@ -11,9 +11,9 @@ export class ConfettiStage extends Animation {
   private count;
   private particles:any[] = [];
 
-  private holder:THREE.Object3D;
+  private holder =new THREE.Object3D();
 
-  private object:THREE.Object3D;
+  private object = new THREE.Object3D();
 
   // private resizeViewport = this.resizeViewport.bind( this );
 
@@ -36,12 +36,8 @@ export class ConfettiStage extends Animation {
     this.distanceFromCube = distance;
 
     this.count = count;
-    this.particles = [];
 
-    this.holder = new THREE.Object3D();
     this.holder.rotation.copy( this.game.world.camera.rotation );
-
-    this.object = new THREE.Object3D();
     this.holder.add( this.object );
 
     this.resizeViewport = this.resizeViewport.bind( this );

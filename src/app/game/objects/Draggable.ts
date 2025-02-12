@@ -1,7 +1,13 @@
 import * as THREE from 'three';
 export class Draggable {
 
-  private position: any;
+  private position = {
+    current: new THREE.Vector2(),
+    start: new THREE.Vector2(),
+    delta: new THREE.Vector2(),
+    old: new THREE.Vector2(),
+    drag: new THREE.Vector2(),
+  }
   private options: any;
   private element: any;
   private touch: any;
@@ -13,20 +19,12 @@ export class Draggable {
 
   constructor( element: any, options?:any ) {
 
-    this.position = {
-      current: new THREE.Vector2(),
-      start: new THREE.Vector2(),
-      delta: new THREE.Vector2(),
-      old: new THREE.Vector2(),
-      drag: new THREE.Vector2(),
-    };
 
     this.options = Object.assign( {
       calcDelta: false,
     }, options || {} );
 
     this.element = element;
-    this.touch = null;
 
     this.drag = {
 

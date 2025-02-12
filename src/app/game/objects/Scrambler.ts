@@ -3,32 +3,21 @@ import * as THREE from 'three';
 export class Scrambler {
 
   private game;
-  private dificulty;
-  private scrambleLength: any;
+  private dificulty = 0;
+  private scrambleLength: any = {
+    2: [ 7, 9, 11 ],
+    3: [ 20, 25, 30 ],
+    4: [ 30, 40, 50 ],
+    5: [ 40, 60, 80 ],
+  }
   private moves: any = [];
   public converted: any[] = [];
-  private pring = '';
 
-  private print: any;
+
   public callback = (any: any) => {};
 
   constructor( game: any ) {
-
     this.game = game;
-
-    this.dificulty = 0;
-
-    this.scrambleLength = {
-      2: [ 7, 9, 11 ],
-      3: [ 20, 25, 30 ],
-      4: [ 30, 40, 50 ],
-      5: [ 40, 60, 80 ],
-    };
-
-    this.moves = [];
-    this.converted = [];
-    this.pring = '';
-
   }
 
   public scramble( scramble?:string ) {
@@ -56,12 +45,7 @@ export class Scrambler {
       }
     }
 
-    
     this.convert();
-    this.print = this.moves.join( ' ' );
-
-    // return this;
-
   }
 
   private convert( moves?:any ) {

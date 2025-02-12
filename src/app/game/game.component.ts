@@ -195,9 +195,10 @@ export class GameComponent implements OnInit, AfterViewInit{
     this.newGame = false;
     this.saved = false;
 
+    this.cube.init();
     this.storage.init();
     this.preferences.init();
-    this.cube.init();
+    
     this.transition.init();
 
     this.storage.loadGame();

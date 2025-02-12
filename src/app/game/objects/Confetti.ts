@@ -4,9 +4,14 @@ export class Confetti {
   private game;
 
   private started = 0;
-  private options: any = {};
-  private geometry: THREE.PlaneGeometry;
-  private material: THREE.MeshLambertMaterial;
+  public options = {
+    speed: { min: 0.0011, max: 0.0022 },
+    revolution: { min: 0.01, max: 0.05 },
+    size: { min: 0.1, max: 0.15 },
+    colors: [ 0x41aac8, 0x82ca38, 0xffef48, 0xef3923, 0xff8c0a ],
+  }
+  public geometry = new THREE.PlaneGeometry( 1, 1 );
+  public material = new THREE.MeshLambertMaterial( { side: THREE.DoubleSide } );
 
   private holders: any[] = [];
 
@@ -14,17 +19,6 @@ export class Confetti {
   constructor( game: any ) {
 
     this.game = game;
-    this.started = 0;
-
-    this.options = {
-      speed: { min: 0.0011, max: 0.0022 },
-      revolution: { min: 0.01, max: 0.05 },
-      size: { min: 0.1, max: 0.15 },
-      colors: [ 0x41aac8, 0x82ca38, 0xffef48, 0xef3923, 0xff8c0a ],
-    };
-
-    this.geometry = new THREE.PlaneGeometry( 1, 1 );
-    this.material = new THREE.MeshLambertMaterial( { side: THREE.DoubleSide } );
 
     this.holders = [
       new ConfettiStage( this.game, this, 1, 20 ),
@@ -64,7 +58,7 @@ export class Confetti {
 
   }
 
-  private updateColors( colors: any ) {
+  public updateColors( colors: any ) {
 
     this.holders.forEach( holder => {
 

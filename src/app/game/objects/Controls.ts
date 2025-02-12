@@ -12,9 +12,9 @@ export class Controls {
   private flipEasings = [ Easing.Power.Out( 3 ), Easing.Sine.Out(), Easing.Back.Out( 1.5 ) ];
   public flipSpeeds = [ 125, 200, 300 ];
 
-  private raycaster:THREE.Raycaster;
+  private raycaster = new THREE.Raycaster();
 
-  private group:any; // THREE.Object3D;
+  private group = new THREE.Object3D();
   private helper:THREE.Mesh;
 
 
@@ -52,11 +52,9 @@ export class Controls {
 
   constructor( game: any ) {
     this.game = game;
-    this.raycaster = new THREE.Raycaster();
 
     const helperMaterial = new THREE.MeshBasicMaterial( { depthWrite: false, transparent: true, opacity: 0, color: 0x0033ff } );
 
-    this.group = new THREE.Object3D();
     this.group.name = 'controls';
     this.game.cube.object.add( this.group );
 

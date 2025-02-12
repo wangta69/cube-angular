@@ -20,6 +20,7 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
+    (window as any).gameVersion = '0.0.1';
     this.iconRegistry
       .addSvgIcon('back', this.sanitizer.bypassSecurityTrustResourceUrl('icons/back.svg'))
       .addSvgIcon('cancel', this.sanitizer.bypassSecurityTrustResourceUrl('icons/cancel.svg'))

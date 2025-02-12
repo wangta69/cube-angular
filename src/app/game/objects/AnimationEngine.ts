@@ -7,13 +7,6 @@ export class AnimationEngine {
   private time = 0;
 
   constructor() {
-
-    this.ids = [];
-    this.animations = {};
-    // this.update = this.update.bind( this );
-    this.raf = 0;
-    this.time = 0;
-
   }
 
   private update = () => {

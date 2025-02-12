@@ -4,8 +4,8 @@ export class Particle {
   private confetti;
   private options;
 
-  private velocity:THREE.Vector3;
-  private force:THREE.Vector3;
+  private velocity = new THREE.Vector3();
+  private force = new THREE.Vector3();
 
   private mesh:any;
   // private mesh:THREE.Mesh;
@@ -23,20 +23,14 @@ export class Particle {
     this.confetti = confetti;
     this.options = this.confetti.options;
 
-    this.velocity = new THREE.Vector3();
-    this.force = new THREE.Vector3();
-
     this.mesh = new THREE.Mesh( this.confetti.geometry, this.confetti.material.clone() );
     this.confetti.object.add( this.mesh );
 
     this.size = THREE.MathUtils.randFloat( this.options.size.min, this.options.size.max );
     this.mesh.scale.set( this.size, this.size, this.size );
-
- 
-
   }
 
-  reset( randomHeight = true ) {
+  public reset( randomHeight = true ) {
 
     this.completed = false;
 
@@ -55,14 +49,14 @@ export class Particle {
 
   }
 
-  stop() {
+  private stop() {
 
     this.completed = true;
     this.confetti.completed ++;
 
   }
 
-  update( delta:number ) {
+  public update( delta:number ) {
 
     this.mesh.position.y += this.speed * delta;
     this.mesh.rotation[ this.revolutionAxis ] += this.revolutionSpeed;

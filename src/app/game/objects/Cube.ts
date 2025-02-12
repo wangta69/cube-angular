@@ -14,14 +14,19 @@ export class Cube {
   private scale!: number;
   private pieces: any[] = [];
   private edges: any;
-  private geometry: any = {};
+  private geometry= {
+    pieceCornerRadius: 0.12,
+    edgeCornerRoundness: 0.15,
+    edgeScale: 0.82,
+    edgeDepth: 0.01,
+  }
   private positions:any[] = [];
 
   private sizeGenerated!: number;
 
-  private holder:THREE.Object3D;
-  private object:THREE.Object3D;
-  private animator:THREE.Object3D;
+  private holder = new THREE.Object3D();
+  private object = new THREE.Object3D();
+  private animator = new THREE.Object3D();
 
   
   private cubes:any[] = [];
@@ -29,30 +34,14 @@ export class Cube {
   constructor( game: any ) {
 
     this.game = game;
-    this.size = 3;
-   
-    
-
-    this.geometry = {
-      pieceCornerRadius: 0.12,
-      edgeCornerRoundness: 0.15,
-      edgeScale: 0.82,
-      edgeDepth: 0.01,
-    };
-
-    this.holder = new THREE.Object3D();
-    this.object = new THREE.Object3D();
-    this.animator = new THREE.Object3D();
 
     this.holder.add( this.animator );
     this.animator.add( this.object );
 
     this.game.world.scene.add( this.holder );
-
   }
 
   public init() {
-
     this.cubes = [];
     this.object.children = [];
     this.object.add( this.game.controls.group );
@@ -150,7 +139,6 @@ export class Cube {
   }
 
   private generateModel() {
-
     this.pieces = [];
     this.edges = [];
 
@@ -159,10 +147,7 @@ export class Cube {
     const mainMaterial = new THREE.MeshLambertMaterial();
 
     const pieceMesh = new THREE.Mesh(
-      // new THREE.BoxGeometry( pieceSize, pieceSize, pieceSize),
-      // new RoundedBoxGeometry( pieceSize, this.geometry.pieceCornerRadius, 3 ),
       new RoundedBoxGeometry( pieceSize, pieceSize, pieceSize, 3, this.geometry.pieceCornerRadius ),
-      // new RoundedBoxGeometry( pieceSize, pieceSize, pieceSize, 1, 0.1 ),
       mainMaterial.clone()
     );
 
@@ -222,7 +207,6 @@ export class Cube {
         position: piece.position.clone(),
         rotation: piece.rotation.clone(),
       };
-
       this.pieces.push( piece );
 
     } );
@@ -230,9 +214,7 @@ export class Cube {
   }
 
   private updateColors( colors: any ) {
-
     if ( typeof this.pieces !== 'object' && typeof this.edges !== 'object' ) return;
-
     this.pieces.forEach( piece => piece.userData.cube.material.color.setHex( colors.P ) );
     this.edges.forEach( (edge: any) => edge.material.color.setHex( colors[ edge.name ] ) );
 
