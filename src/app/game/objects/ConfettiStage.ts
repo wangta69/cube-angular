@@ -11,7 +11,7 @@ export class ConfettiStage extends Animation {
   private count;
   private particles:any[] = [];
 
-  private holder =new THREE.Object3D();
+  private holder = new THREE.Object3D();
 
   private object = new THREE.Object3D();
 
@@ -21,8 +21,13 @@ export class ConfettiStage extends Animation {
   private material;
 
   private options;
+  private completed = 0;
+  private time!:number;
+  private playing = true;
   private height!:number;
   private width!:number;
+
+  public callback =  () => {}; 
 
 
 
@@ -53,8 +58,8 @@ export class ConfettiStage extends Animation {
     while ( i-- ) this.particles.push( new Particle( this ) );
 
   }
-/*
-  private start() {
+
+  private _start() {
 
     this.time = performance.now();
     this.playing = true;
@@ -66,14 +71,14 @@ export class ConfettiStage extends Animation {
 
   }
 
-  private stop( callback ) {
+  private _stop( callback:()=>void ) {
 
     this.playing = false;
     this.completed = 0;
     this.callback = callback;
 
   }
-
+/*
   private reset() {
     super.stop();
     this.callback();

@@ -21,9 +21,6 @@ export class Controls {
   private edges:any; //THREE.Mesh;
 
 
-  // this.onSolved = () => {};
-  // this.onMove = () => {};
-
   private momentum: any[] = [];
 
   private scramble: any = null;
@@ -95,21 +92,19 @@ export class Controls {
     let gettingDrag: any;
 
     this.draggable.onDragStart = (position:any) => {
-
+    //  console.log('onDragStart this.state >>', this.state);
       if ( this.scramble !== null ) return;
       if ( this.state === PREPARING || this.state === ROTATING ) return;
 
       gettingDrag = this.state === ANIMATING;
-
-
+     // console.log('start 11');
       const edgeIntersect: any = this.getIntersect( position.current, this.edges, false );
       if ( edgeIntersect !== false ) {
-
         this.dragIntersect = this.getIntersect( position.current, this.game.cube.cubes, true );
-
       }
-
+    //  console.log('start 22 edgeIntersect :', edgeIntersect, ', dragIntersect:', this.dragIntersect);
       if ( edgeIntersect !== false && this.dragIntersect !== false ) {
+       // console.log('start 33');
         this.dragNormal = edgeIntersect.face.normal.round();
         this.flipType = 'layer';
 
@@ -124,32 +119,34 @@ export class Controls {
         this.detach( this.helper, this.edges );
 
       } else {
+     //   console.log('start 44');
         this.dragNormal = new THREE.Vector3( 0, 0, 1 );
         this.flipType = 'cube';
 
         this.helper.position.set( 0, 0, 0 );
         this.helper.rotation.set( 0, Math.PI / 4, 0 );
         this.helper.updateMatrixWorld();
-
       }
 
-      let planeIntersect = this.getIntersect( position.current, this.helper, false );
+      const planeIntersect = this.getIntersect( position.current, this.helper, false );
+     // console.log('planeIntersect:', planeIntersect, )
       if ( planeIntersect === false ) return;
 
       this.dragCurrent = this.helper.worldToLocal( planeIntersect.point );
       this.dragTotal = new THREE.Vector3();
       this.state = ( this.state === STILL ) ? PREPARING : this.state;
-
+    //  console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
     };
 
     this.draggable.onDragMove = position => {
-
+     // console.log('================================= onDragMove this.state >>', this.state, ', dragTotal.length', this.dragTotal.length());
+      // console.log('onDragMove this.scramble >>', this.scramble);
       if ( this.scramble !== null ) return;
       if ( this.state === STILL || ( this.state === ANIMATING && gettingDrag === false ) ) return;
-
+      // console.log('onDragMove111   passs');
       const planeIntersect = this.getIntersect( position.current, this.helper, false );
       if ( planeIntersect === false ) return;
-
+      // console.log('onDragMove22222   passs');
       const point = this.helper.worldToLocal( planeIntersect.point.clone() );
 
       this.dragDelta = point.clone().sub( this.dragCurrent ).setZ( 0 );
@@ -158,7 +155,7 @@ export class Controls {
       this.addMomentumPoint( this.dragDelta );
 
       if ( this.state === PREPARING && this.dragTotal.length() > 0.05 ) {
-
+       // console.log('onDragMove3333333333333333');
         this.dragDirection = this.getMainAxis( this.dragTotal );
 
         if ( this.flipType === 'layer' ) {
@@ -188,30 +185,29 @@ export class Controls {
         this.state = ROTATING;
 
       } else if ( this.state === ROTATING ) {
-
+        // console.log('onDragMove444444444444444444444444  this.flipType >>', this.flipType);
         const rotation = this.dragDelta[ this.dragDirection ];
 
         if ( this.flipType === 'layer' ) { 
-
+          // console.log('flipAxis:', this.flipAxis, 'rotation:', rotation)
           this.group.rotateOnAxis( this.flipAxis, rotation );
           this.flipAngle += rotation;
 
         } else {
-
+          console.log('flipAxis:', this.flipAxis, 'rotation:', rotation);
           this.edges.rotateOnWorldAxis( this.flipAxis, rotation );
+
+          console.log('this.edges.rotation >>', this.edges.rotation );
+          console.log('this.game.cube.object.rotation >>', this.game.cube.object.rotation );
           this.game.cube.object.rotation.copy( this.edges.rotation );
           this.flipAngle += rotation;
 
         }
-
-        
-
       }
 
     };
 
-    this.draggable.onDragEnd = position => {
-
+    this.draggable.onDragEnd = () => {
       if ( this.scramble !== null ) return;
       if ( this.state !== ROTATING ) {
 
@@ -256,8 +252,7 @@ export class Controls {
 
       }
 
-    };
-
+    }
   }
 
   private rotateLayer( rotation: number, scramble: boolean, callback:(layer: any)=>void ) {
@@ -341,8 +336,7 @@ export class Controls {
       onComplete: () => {
 
         // this.edges.rotation.setFromVector3( this.snapRotation( this.edges.rotation.toVector3() ) );
-        this.edges.rotation.setFromVector3( this.snapRotation( new THREE.Vector3().setFromEuler(this.edges.rotation) ) );
-        
+        this.edges.rotation.setFromVector3( this.snapRotation( new THREE.Vector3().setFromEuler(this.edges.rotation) ) );        
         this.game.cube.object.rotation.copy( this.edges.rotation );
         callback();
 
@@ -459,13 +453,9 @@ export class Controls {
       this.state = ROTATING;
 
       this.rotateCube( move.angle, () => {
-
         this.state = STILL;
-
       } );
-
     }
-
   }
 
   public scrambleCube() {
@@ -509,6 +499,7 @@ export class Controls {
 
   private getIntersect( position: any, object: any, multiple: any ) {
     
+   // console.log('getIntersect position:', position, ', object:', object, ', multiple:', multiple);
     this.raycaster.setFromCamera(
       this.draggable.convertPosition( position.clone() ),
       this.game.world.camera
@@ -599,7 +590,7 @@ export class Controls {
 
   private checkIsSolved() {
 
-    const start = performance.now();
+    // const start = performance.now();
 
     let solved = true;
     const sides:any = { 'x-': [], 'x+': [], 'y-': [], 'y+': [], 'z-': [], 'z+': [] };
@@ -618,9 +609,7 @@ export class Controls {
     } );
 
     Object.keys( sides ).forEach( side => {
-
       if ( ! sides[ side ].every( (value:any) => value === sides[ side ][ 0 ] ) ) solved = false;
-
     } );
 
     if ( solved ) this.onSolved();

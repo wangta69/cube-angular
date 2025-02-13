@@ -27,10 +27,9 @@ import {ThemeEditor} from './objects/ThemeEditor';
 export class GameComponent implements OnInit, AfterViewInit{
 
   //THREEJS RELATED VARIABLES
-
-  private scene: any;
-  private camera: any;
-  private renderer: any;
+  // public scene: any;
+  // public camera: any;
+  // public renderer: any;
   private dom: any;
 
 
@@ -44,25 +43,26 @@ export class GameComponent implements OnInit, AfterViewInit{
   private scores!:Scores;
   private storage!:Storage;
   private confetti!:Confetti;
-  private themes!:Themes;
+  public themes!:Themes;
   private themeEditor!:ThemeEditor;
 
 
 
   private state = STATE.Menu;
-  private playing = false;
+  public playing = false;
   private newGame = false;
   private saved = false;
 
   private bestTime=false;
+  private tappedTwice = false;
 
-  disabled = false;
-  max = 100;
-  min = 0;
-  showTicks = false;
-  step = 1;
-  thumbLabel = false;
-  value = 0;
+  // private disabled = false;
+  // private max = 100;
+  // private min = 0;
+  // private showTicks = false;
+  // private step = 1;
+  // private thumbLabel = false;
+  // private value = 0;
 
   constructor() {
   }
@@ -70,21 +70,19 @@ export class GameComponent implements OnInit, AfterViewInit{
 
   ngOnInit() {
 
-
-
   }
 
-  public dragEnd(ev: any) {
+  // public dragEnd(ev: any) {
 
-  }
+  // }
 
-  public dragStart(ev: any) {
+  // public dragStart(ev: any) {
 
-  }
+  // }
 
-  public valueChange(ev: any) {
+  // public valueChange(ev: any) {
 
-  }
+  // }
   ngAfterViewInit() {
 
     this.dom = {
@@ -103,11 +101,11 @@ export class GameComponent implements OnInit, AfterViewInit{
         theme: document.querySelector( '.texts .theme' ),
       },
       buttons: {
-        prefs: document.querySelector( '.buttons .btn-prefs' ),
-        back: document.querySelector( '.buttons .btn-back' ),
-        stats: document.querySelector( '.buttons .btn-stats' ),
-        reset: document.querySelector( '.buttons .btn-reset' ),
-        theme: document.querySelector( '.buttons .btn-theme' ),
+        prefs: document.querySelector( '.btn-prefs' ),
+        back: document.querySelector( '.btn-back' ),
+        stats: document.querySelector( '.btn-stats' ),
+        reset: document.querySelector( '.btn-reset' ),
+        theme: document.querySelector( '.btn-theme' ),
       },
     };
 
@@ -120,60 +118,6 @@ export class GameComponent implements OnInit, AfterViewInit{
 
   }
 
-  /**
-   * .range__list
-   
-  private convertRange() {
-    const RangeHTML = [
-
-      '<div class="range">',
-        '<div class="label"></div>',
-        '<div class="track">',
-          '<div class="track-line"></div>',
-          '<div class="handle"><div></div></div>',
-        '</div>',
-        '<div class="list"></div>',
-      '</div>',
-    
-    ].join( '\n' );
-    
-    document.querySelectorAll( 'range' ).forEach( (el:any) => {
-    
-      const temp = document.createElement( 'div' );
-      temp.innerHTML = RangeHTML;
-    
-      const range:any = temp.querySelector( '.range' );
-      const rangeLabel = range.querySelector( '.range .label' );
-      const rangeList = range.querySelector( '.range .list' );
-
-    
-      range.setAttribute( 'name', el.getAttribute( 'name' ) );
-      rangeLabel.innerHTML = el.getAttribute( 'title' );
-    
-      if ( el.hasAttribute( 'color' ) ) {
-    
-        range.classList.add( 'type-color' );
-        range.classList.add( 'color-' + el.getAttribute( 'name' ) );
-  
-      }
-    
-      if ( el.hasAttribute( 'list' ) ) {
-    
-        el.getAttribute( 'list' ).split( ',' ).forEach( (listItemText: any) => {
-    
-          const listItem = document.createElement( 'div' );
-          listItem.innerHTML = listItemText;
-          rangeList.appendChild( listItem );
-    
-        } );
-    
-      }
-    
-      el.parentNode.replaceChild( range, el );
-    
-    } );
-  }
-*/
   private create() {
     this.world = new World( this );
 
@@ -217,83 +161,69 @@ export class GameComponent implements OnInit, AfterViewInit{
   }
 
   private initActions() {
-
-    let tappedTwice = false;
-
-    this.dom.game.addEventListener( 'click', () => {
-      if ( this.transition.activeTransitions > 0 ) return;
-      if ( this.state === STATE.Playing ) return;
-
-      if ( this.state === STATE.Menu ) {
-
-        if ( ! tappedTwice ) {
-
-          tappedTwice = true;
-          setTimeout( () => tappedTwice = false, 300 );
-          return false;
-
-        }
-
-        this.game( SHOW );
-
-      } else if ( this.state === STATE.Complete ) {
-
-        this.complete( HIDE );
-
-      } else if ( this.state === STATE.Stats ) {
-
-        this.stats( HIDE );
-
-      } 
-      return;
-
-    }, false );
-
     this.controls.onMove = () => {
       if ( this.newGame ) {
-        
         this.timer._start( true );
         this.newGame = false;
-
       }
-
     };
 
-    this.dom.buttons.back.onclick = (event: any) => {
-
-      if ( this.transition.activeTransitions > 0 ) return;
-
-      if ( this.state === STATE.Playing ) {
-
-        this.game( HIDE );
-
-      } else if ( this.state === STATE.Prefs ) {
-
-        this.prefs( HIDE );
-
-      } else if ( this.state === STATE.Theme ) {
-
-        this.theme( HIDE );
-
-      }
-
-    };
-
-    this.dom.buttons.reset.onclick = (event:any) => {
-
-      if ( this.state === STATE.Theme ) {
-
-        this.themeEditor.resetTheme();
-
-      }
-      
-    };
-
-    this.dom.buttons.prefs.onclick = (event:any) => this.prefs( SHOW );
-    this.dom.buttons.theme.onclick = (event:any) => this.theme( SHOW );
-    this.dom.buttons.stats.onclick = (event:any) => this.stats( SHOW );
     this.controls.onSolved = () => this.complete( SHOW );
   }
+
+  public onclick_game() {
+    if ( this.transition.activeTransitions > 0 ) return;
+    if ( this.state === STATE.Playing ) return;
+
+    if ( this.state === STATE.Menu ) {
+      if ( ! this.tappedTwice ) {
+        this.tappedTwice = true;
+        setTimeout( () => this.tappedTwice = false, 300 );
+        return false;
+      }
+
+      this.game( SHOW );
+    } else if ( this.state === STATE.Complete ) {
+      this.complete( HIDE );
+
+    } else if ( this.state === STATE.Stats ) {
+      this.stats( HIDE );
+    } 
+    return;
+  }
+
+  public onclick_back() {
+    if ( this.transition.activeTransitions > 0 ) return;
+
+    switch(this.state) {
+      case STATE.Playing: this.game( HIDE ); break;
+      case STATE.Prefs: this.prefs( HIDE ); break;
+      case STATE.Theme: this.theme( HIDE ); break;
+    }
+  }
+
+  public onclick_reset() {
+    if ( this.state === STATE.Theme ) {
+      this.themeEditor.resetTheme();
+    }
+  }
+
+  public onclick_prefs() {
+    this.prefs( SHOW );
+  }
+
+  public onclick_theme() {
+    this.theme( SHOW );
+  }
+
+  public onclick_stats() {
+    this.stats( SHOW );
+  }
+
+
+  // this.dom.buttons.prefs.onclick = (event:any) => this.prefs( SHOW );
+  //   this.dom.buttons.theme.onclick = (event:any) => this.theme( SHOW );
+  //   this.dom.buttons.stats.onclick = (event:any) => this.stats( SHOW );
 
   private game( show:boolean ) {
 

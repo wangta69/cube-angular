@@ -15,7 +15,8 @@ export class Cube {
   private pieces: any[] = [];
   private edges: any;
   private geometry= {
-    pieceCornerRadius: 0.12,
+    // pieceCornerRadius: 0.12,
+    pieceCornerRadius: 0.05,
     edgeCornerRoundness: 0.15,
     edgeScale: 0.82,
     edgeDepth: 0.01,
@@ -59,16 +60,12 @@ export class Cube {
     this.generateModel();
 
     this.pieces.forEach( (piece: any) => {
-
       this.cubes.push( piece.userData.cube );
       this.object.add( piece );
-
     } );
 
     this.holder.traverse( node => {
-
       if ( node.frustumCulled ) node.frustumCulled = false;
-
     } );
 
     this.updateColors( this.game.themes.getColors() );

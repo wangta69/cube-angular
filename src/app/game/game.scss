@@ -2,10 +2,8 @@
 
 @mixin inset {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
 .ui{
@@ -33,11 +31,10 @@
   > .texts,
   > .prefs,
   > .theme,
-  > .stats,
-  > .buttons{
+  > .stats {
     @include inset;
     inset: auto;
-    overflow: hidden;
+    // overflow: hidden;
   }
 
   > .background{
@@ -71,7 +68,7 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    // overflow: hidden;
     z-index: 4;
   }
 
@@ -111,57 +108,59 @@
   }
   > .buttons{
     z-index: 5;
-
-    .btn {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      background-color: transparent;
-      border-radius: 0;
-      border-width: 0;
-      position: absolute;
-      pointer-events: none;
-      font-size: 1.2em;
-      color: rgba(#000, 0.25);
-      opacity: 0;
-    
-      &:after{
+    display: flex;
+    justify-content: space-between; 
+    position: absolute;
+    width: 100vw;
+    // overflow: hidden;
+    height: 3em;
+    bottom: 0;
+    div {
+      position: relative;
+      width: 50%;
+      &.left-btns {
+        button {left: 1em}
+      }
+      &.right-btns {
+        button {right: 1em}
+      }
+      button {
+        // -webkit-appearance: none;
+        // -moz-appearance: none;
+        appearance: none;
+        background-color: transparent;
+        border-radius: 0;
+        border-width: 0;
         position: absolute;
-        content: '';
-        width: 3em;
-        height: 3em;
-        left: 50%;
-        top: 50%;
-        margin-left: -1.5em;
-        margin-top: -1.5em;
-        border-radius: 100%;
-      }
-      &.bl{
-        bottom: 0.8em;
-        left: 0.8em;
-      }
-      &.br{
-        bottom: 0.8em;
-        right: 0.8em;
-      }
-      &.bc{
-        bottom: 0.8em;
-        left: calc(50% - 0.5em);
-      }
-      svg {
-        display: block;
-      }
-      &.cancel{
-        display: none !important;
+        pointer-events: none;
+        // font-size: 1.2em;
+        color: rgba(#000, 0.25);
+        opacity: 0;
+      
+        &:after{
+          position: absolute;
+          content: '';
+          width: 3em;
+          height: 3em;
+          left: 50%;
+          top: 50%;
+          margin-left: -1.5em;
+          margin-top: -1.5em;
+          border-radius: 100%;
+        }
+        &.cancel{
+          display: none !important;
+        }
       }
     }
   }
 
   .mat-icon { 
-    display: inline-block;
-    font-size: inherit;
+    // display: inline-block;
     overflow: visible;
-    vertical-align: -0.125em;
+    vertical-align: middle;
+    width: 1.2em;
+    height: 1.5em;
   }
   
   .range{
@@ -192,7 +191,9 @@
             background: transparent;
 
             &:after {
-              @include inset;
+              position: absolute;
+              width: 100%;
+              height: 100%;
               content: '';
               opacity: 0.5;
             }

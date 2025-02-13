@@ -103,21 +103,19 @@ export class Draggable {
   }
 
   private getPositionCurrent( event: any ) {
-
     const dragEvent = event.touches
       ? ( event.touches[ 0 ] || event.changedTouches[ 0 ] )
       : event;
     this.position.current.set( dragEvent.pageX, dragEvent.pageY );
-
   }
 
   public convertPosition( position:any ) {
-
+    console.log(this.element);
+    console.log(position.x, position.y, this.element.offsetWidth, this.element.offsetHeight)
     position.x = ( position.x / this.element.offsetWidth ) * 2 - 1;
     position.y = - ( ( position.y / this.element.offsetHeight ) * 2 - 1 );
-
+    console.log('after:', position.x, position.y)
     return position;
-
   }
 
 }

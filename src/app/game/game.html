@@ -3,7 +3,7 @@
 
   
 
-  <div class="game"></div>
+  <div class="game" (click)="onclick_game()"></div>
   
   <div class="background"></div>
 
@@ -106,7 +106,6 @@
         <div class="track-line"></div>
         <div class="handle"><div></div></div>
       </div>
-      <div class="list"></div>
     </div>
 
     <div class="range type-color color-saturation" name="saturation">
@@ -115,7 +114,6 @@
         <div class="track-line"></div>
         <div class="handle"><div></div></div>
       </div>
-      <div class="list"></div>
     </div>
 
     <div class="range type-color color-lightness" name="lightness">
@@ -124,7 +122,6 @@
         <div class="track-line"></div>
         <div class="handle"><div></div></div>
       </div>
-      <div class="list"></div>
     </div>
   </div>
 
@@ -153,21 +150,26 @@
   </div>
 
   <div class="buttons">
-    <button class="btn bl btn-stats">
-      <mat-icon svgIcon="trophy"></mat-icon>
-    </button>
-    <button class="btn br btn-prefs">
-      <mat-icon svgIcon="settings"></mat-icon>
-    </button>
-    <button class="btn bl btn-back">
-      <mat-icon svgIcon="back"></mat-icon>
-    </button>
-    <button class="btn br btn-theme">
-      <mat-icon svgIcon="theme"></mat-icon>
-    </button>
-    <button class="btn br btn-reset">
-      <mat-icon svgIcon="reset"></mat-icon>
-    </button>
+    <div class="left-btns">
+      <button class="btn-stats" (click)="onclick_stats()">
+        <mat-icon svgIcon="trophy"></mat-icon>
+      </button>
+      <button class="btn-back" (click)="onclick_back()">
+        <mat-icon svgIcon="back"></mat-icon>
+      </button>
+    </div>
+    <div class="right-btns">
+      <button class="btn-prefs" (click)="onclick_prefs()">
+        <mat-icon svgIcon="settings"></mat-icon>
+      </button>
+      
+      <button class="btn-theme" (click)="onclick_theme()">
+        <mat-icon svgIcon="theme"></mat-icon>
+      </button>
+      <button class="btn-reset" (click)="onclick_reset()">
+        <mat-icon svgIcon="reset"></mat-icon>
+      </button>
+    </div>
   </div>
 
 </div>

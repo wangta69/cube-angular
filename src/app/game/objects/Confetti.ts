@@ -28,13 +28,13 @@ export class Confetti {
   }
 
   public start() {
-
+    console.log('start======================');
     if ( this.started > 0 ) return;
 
     this.holders.forEach( holder => {
 
       this.game.world.scene.add( holder.holder );
-      holder.start();
+      holder._start();
       this.started ++;
 
     } );
@@ -42,12 +42,12 @@ export class Confetti {
   }
 
   public stop() {
-
+    console.log('stop======================');
     if ( this.started == 0 ) return;
 
     this.holders.forEach( holder => {
 
-      holder.stop( () => {
+      holder._stop( () => {
 
         this.game.world.scene.remove( holder.holder );
         this.started --;
