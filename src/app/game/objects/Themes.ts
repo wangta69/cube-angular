@@ -61,6 +61,7 @@ export class Themes {
   constructor( game: any ) {
     this.game = game;
     this.colors = JSON.parse( JSON.stringify( this.defaults ) );
+    
   }
 
   private getColors() {

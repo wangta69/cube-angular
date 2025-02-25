@@ -65,6 +65,8 @@ export class GameComponent implements OnInit, AfterViewInit{
   // private value = 0;
 
   constructor() {
+    this.storage = new Storage( this );
+    this.storage.init();
   }
   
 
@@ -128,7 +130,7 @@ export class GameComponent implements OnInit, AfterViewInit{
     this.timer = new Timer( this );
     this.preferences = new Preferences( this );
     this.scores = new Scores( this );
-    this.storage = new Storage( this );
+
     this.confetti = new Confetti( this );
     this.themes = new Themes( this );
     this.themeEditor = new ThemeEditor( this );
@@ -139,11 +141,14 @@ export class GameComponent implements OnInit, AfterViewInit{
     this.newGame = false;
     this.saved = false;
 
+    
     this.cube.init();
-    this.storage.init();
+    this.themes.setTheme(this.storage.theme);
+    
     this.preferences.init();
     
     this.transition.init();
+    
 
     this.storage.loadGame();
     this.scores.calcStats();
@@ -226,15 +231,15 @@ export class GameComponent implements OnInit, AfterViewInit{
   //   this.dom.buttons.stats.onclick = (event:any) => this.stats( SHOW );
 
   private game( show:boolean ) {
-
     if ( show ) {
-
       if ( ! this.saved ) {
 
+        
         this.scrambler.scramble();
+        // 각각의 조각의 layer로 섞는다.
         this.controls.scrambleCube();
         this.newGame = true;
-
+        
       }
 
       const duration = this.saved ? 0 :

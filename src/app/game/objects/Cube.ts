@@ -10,7 +10,7 @@ export class Cube {
   private game: any;
   //private size:number = 3;
   // private size:2|3|4|5 = 3
-  private size:SizeRange = 3
+  public size:SizeRange = 3
   private scale!: number;
   private pieces: any[] = [];
   private edges: any;
@@ -35,7 +35,7 @@ export class Cube {
   constructor( game: any ) {
 
     this.game = game;
-
+    this.size = game.storage.cubeSize;
     this.holder.add( this.animator );
     this.animator.add( this.object );
 
@@ -205,16 +205,15 @@ export class Cube {
         rotation: piece.rotation.clone(),
       };
       this.pieces.push( piece );
-
-    } );
+    });
 
   }
 
   private updateColors( colors: any ) {
     if ( typeof this.pieces !== 'object' && typeof this.edges !== 'object' ) return;
     this.pieces.forEach( piece => piece.userData.cube.material.color.setHex( colors.P ) );
-    this.edges.forEach( (edge: any) => edge.material.color.setHex( colors[ edge.name ] ) );
 
+    this.edges.forEach( (edge: any) => edge.material.color.setHex( colors[ edge.name ] ) );
   }
 
   public loadFromData( data: any ) {

@@ -110,11 +110,8 @@ export class Draggable {
   }
 
   public convertPosition( position:any ) {
-    console.log(this.element);
-    console.log(position.x, position.y, this.element.offsetWidth, this.element.offsetHeight)
     position.x = ( position.x / this.element.offsetWidth ) * 2 - 1;
     position.y = - ( ( position.y / this.element.offsetHeight ) * 2 - 1 );
-    console.log('after:', position.x, position.y)
     return position;
   }
 

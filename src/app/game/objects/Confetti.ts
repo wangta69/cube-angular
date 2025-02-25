@@ -28,7 +28,6 @@ export class Confetti {
   }
 
   public start() {
-    console.log('start======================');
     if ( this.started > 0 ) return;
 
     this.holders.forEach( holder => {
@@ -42,7 +41,6 @@ export class Confetti {
   }
 
   public stop() {
-    console.log('stop======================');
     if ( this.started == 0 ) return;
 
     this.holders.forEach( holder => {

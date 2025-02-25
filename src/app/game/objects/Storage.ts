@@ -2,6 +2,20 @@ import * as THREE from 'three';
 export class Storage {
   private game;
 
+
+  public cubeSize = 3;
+  public flipConfig = 0;
+  public dificulty = 1;
+
+  public fov = 10;
+
+
+  public colors!:string;
+  public theme = 'cube';
+
+  public scores!:any;
+
+
   constructor( game:any ) {
     this.game = game;
 
@@ -51,7 +65,7 @@ export class Storage {
 
   }
 
-  private saveGame() {
+  public saveGame() {
 
     const gameInProgress = 'true';
     const gameCubeData: any= { names: [], positions: [], rotations: [] };
@@ -144,42 +158,27 @@ export class Storage {
   }
 
   private loadPreferences() {
-
     try {
       const theCube_preferences = localStorage.getItem( 'theCube_preferences' );
       const preferences = theCube_preferences ? JSON.parse( theCube_preferences) : null;
 
       if ( ! preferences ) throw new Error();
 
-      this.game.cube.size = parseInt( preferences.cubeSize );
-      this.game.controls.flipConfig = parseInt( preferences.flipConfig );
-      this.game.scrambler.dificulty = parseInt( preferences.dificulty );
+      this.cubeSize = parseInt( preferences.cubeSize );
+      this.flipConfig = parseInt( preferences.flipConfig );
+      this.dificulty = parseInt( preferences.dificulty );
 
-      this.game.world.fov = parseFloat( preferences.fov );
-      this.game.world.resize();
+      this.fov = parseFloat( preferences.fov );
+      // this.game.world.resize();
 
-      this.game.themes.colors = preferences.colors;
-      this.game.themes.setTheme( preferences.theme);
-
-      return true;
-
+      this.colors = preferences.colors;
+      this.theme = preferences.theme;
     } catch (e) {
       console.error(e);
-      this.game.cube.size = 3;
-      this.game.controls.flipConfig = 0;
-      this.game.scrambler.dificulty = 1;
-
-      this.game.world.fov = 10;
-      this.game.world.resize();
-
-      this.game.themes.setTheme( 'cube' );
-      this.savePreferences();
-
-      return false;
     }
   }
 
-  private savePreferences() {
+  public savePreferences() {
     const preferences = {
       cubeSize: this.game.cube.size,
       flipConfig: this.game.controls.flipConfig,

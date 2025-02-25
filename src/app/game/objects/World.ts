@@ -6,7 +6,7 @@ export class World extends Animation {
   private game: any;
 
   private container: any;
-  private scene = new THREE.Scene();
+  public scene = new THREE.Scene();
 
   private renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
 
@@ -29,6 +29,7 @@ export class World extends Animation {
     super( true );
 
     this.game = game;
+    this.fov = game.storage.fov;
 
     this.container = this.game.dom.game;
 
@@ -36,7 +37,7 @@ export class World extends Animation {
     this.container.appendChild( this.renderer.domElement );
 
     this.createLights();
-    
+    // this.setAxesHelper();
     this.resize();
     window.addEventListener( 'resize', () => this.resize(), false );
 
@@ -47,7 +48,12 @@ export class World extends Animation {
     this.renderer.render( this.scene, this.camera );
 
   }
-
+/*
+  private setAxesHelper() {
+    const axesHelper = new THREE.AxesHelper( 5 );
+    this.scene.add( axesHelper );
+  }
+  */
   private resize() {
 
     this.width = this.container.offsetWidth;
@@ -85,9 +91,6 @@ export class World extends Animation {
 
     this.lights = {
       holder:  new THREE.Object3D,
-      // ambient: new THREE.AmbientLight( 0xffffff, 0.69 ),
-      // front:   new THREE.DirectionalLight( 0xffffff, 0.36 ),
-      // back:    new THREE.DirectionalLight( 0xffffff, 0.19 ),
       ambient: new THREE.AmbientLight( 0xffffff, 0.7),
       front:   new THREE.DirectionalLight( 0xffffff, 3 ),
       back:    new THREE.DirectionalLight( 0xffffff, 0.19 ),

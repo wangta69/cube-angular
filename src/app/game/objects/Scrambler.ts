@@ -1,5 +1,8 @@
 import * as THREE from 'three';
 
+/**
+ * 초기 시작시 
+ */
 export class Scrambler {
 
   private game;
@@ -13,11 +16,11 @@ export class Scrambler {
   private moves: any = [];
   public converted: any[] = [];
 
-
   public callback = (any: any) => {};
 
   constructor( game: any ) {
     this.game = game;
+    this.dificulty = game.storage.dificulty;
   }
 
   public scramble( scramble?:string ) {
